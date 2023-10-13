@@ -1,10 +1,6 @@
 <template>
-  <input
-    :value="modelValue"
-    @input="updateInput(($event.target as HTMLInputElement).value)"
-    type="{{type}}"
-    class="input"
-  />
+  <input :value="modelValue" @input="updateInput(($event.target as HTMLInputElement).value)" type="{{type}}"
+    class="input" />
 </template>
 
 <script lang="ts">
@@ -25,12 +21,21 @@ export default defineComponent({
 
 <style lang="scss">
 .input {
-  border: 1px solid #cccc;
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  background: #FFF;
   outline: none;
-  padding: 6px;
+  padding: 8px;
+  color: #545454;
+  font-size: 12px;
+  line-height: 160%;
+  min-width: 228px;
+  box-sizing: border-box;
+
   &_error {
     border: 1px solid rgb(218, 0, 0);
   }
+
   &_valid {
     border: 1px solid rgb(21, 179, 0);
   }

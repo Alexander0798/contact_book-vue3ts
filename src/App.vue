@@ -5,7 +5,7 @@
       <AppDropDown :options="options" :selectedOption="selectedOption" @toggleSelected="toggleSelected" />
       <AppButtonAdd/>
     </AppMenu>
-
+    <AppFormAdd/>
   </main>
 </template>
 <script lang="ts">
@@ -14,6 +14,7 @@ import AppHeader from './components/AppHeader.vue';
 import AppMenu from './components/AppMenu.vue';
 import AppDropDown from './components/AppDropDown.vue';
 import AppButtonAdd from './components/AppButtonAdd.vue';
+import AppFormAdd from './components/AppFormAdd.vue';
 import DropDownOption from './types/DropDownOption';
 import AppState from './types/AppState'
 
@@ -40,7 +41,8 @@ export default defineComponent({
     AppHeader,
     AppMenu,
     AppDropDown,
-    AppButtonAdd
+    AppButtonAdd,
+    AppFormAdd
   },
   created() {
     this.selectedOption = this.options[0]
