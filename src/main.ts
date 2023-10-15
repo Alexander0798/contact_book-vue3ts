@@ -15,6 +15,14 @@ components.forEach((component) => app.component(component.name, component));
 app.mount("#app");
 VueCookieNext.config({ expire: "7d" });
 
+app.directive('click-outside', <Directive>{
+  mounted(element, colback){
+    element.clickOuts
+  },
+  unmounted() {
+
+  }
+})
 app.directive('phone', <Directive>{
     bind(el: any) {  
       el.oninput = function(e: any) {

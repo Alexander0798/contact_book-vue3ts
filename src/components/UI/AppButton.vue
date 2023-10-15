@@ -4,12 +4,12 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script  lang="ts">
 
-export default defineComponent({
+
+export default {
   name: "AppButton",
-});
+};
 </script>
 <style lang="scss">
 .button {

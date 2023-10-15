@@ -14,6 +14,5 @@ export default {
         grid-template-columns: 0.5fr 1fr;
         gap: 16px 25px;
         align-items: center;
-        font-weight: 700;
     }
 </style>

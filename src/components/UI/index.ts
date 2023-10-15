@@ -5,6 +5,7 @@ import AppLabel from "./AppLabel.vue";
 import AppInputWrapper from './AppInputWrapper.vue'
 import AppButtonSave from './AppButtonSave.vue'
 import AppButtonDeleted from './AppButtonDeleted.vue'
+import AppDropDown from './AppDropDown.vue';
 export default [
   AppButton,
   AppInput,
@@ -12,5 +13,6 @@ export default [
   AppLabel,
   AppInputWrapper,
   AppButtonSave,
-  AppButtonDeleted
+  AppButtonDeleted,
+  AppDropDown
 ];

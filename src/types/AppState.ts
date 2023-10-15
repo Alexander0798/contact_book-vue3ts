@@ -1,6 +1,8 @@
-import DropDownOption from "./DropDownOption";
+import OptionDropDown from "./OptionDropDown";
 
 export default interface AppState {
-    options: DropDownOption[],
-    selectedOption:  null | DropDownOption
+    optionsFilter: OptionDropDown[];
+    selectedFilter: OptionDropDown;
+    optionsForm: OptionDropDown[];
+    selectedForm: OptionDropDown;
 }

@@ -1,6 +1,6 @@
 <template>
     <button class="button-save">
-        <img src="../../assets/save.svg" alt="save" class="button-save__image" v-if="isLoader">
+        <img src="../../assets/save.svg" alt="save" class="button-save__image" v-if="!isLoader">
         <img src="../../assets/loader.svg" alt="loader" class="button-save__image button-save__image_loader" v-else>
         <span class="button-save__text">Сохранить</span>
     </button>
