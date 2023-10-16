@@ -1,11 +1,12 @@
 <template >
-    <div class="dropdown" @click="toggleDropDown" ref="dropDown">
+    <div class="dropdown" @click="toggleDropDown" ref="dropDown" :class="{ 'dropdown_width': props.textWeight }">
         <div class="dropdown__selected-options" :class="{
             'dropdown__selected-options_active': isOpen && !props.textWeight,
             'dropdown__selected-options_weight-active': isOpen && props.textWeight,
-            'dropdown__selected-options_weight': props.textWeight
-        }">{{
-    selectedOption?.name }}</div>
+            'dropdown__selected-options_weight': props.textWeight,
+            'dropdown__selected-options_error': props.error
+        }">{{ !error ?
+    selectedOption?.name : "Выбирете катигорию..." }}</div>
 
         <ul class="dropdown__list" v-if="isOpen">
             <li class="dropdown__item" v-for="(   option, index   ) in    props.options   "
@@ -18,7 +19,7 @@
 </template>
 <script setup lang="ts">
 
-import { defineProps, PropType, ref, onBeforeUpdate } from 'vue';
+import { PropType, ref, onBeforeUpdate, onUnmounted } from 'vue';
 import OptionDropDown from "../../types/OptionDropDown"
 
 
@@ -28,10 +29,15 @@ const props = defineProps({
         required: true
     },
     selectedOption: {
-        type: null as unknown as PropType<null | OptionDropDown>,
+        type: Object as PropType<OptionDropDown>,
+        required: true
 
     },
     textWeight: {
+        type: Boolean,
+        default: false
+    },
+    error: {
         type: Boolean,
         default: false
     }
@@ -49,6 +55,7 @@ const toggleSelected = (option: OptionDropDown) => {
 
 const closeDropDown = (evt: Event) => {
     const el = evt.target as HTMLInputElement
+    console.log(el)
     if (!dropDown.value.contains(el)) {
         isOpen.value = false
     }
@@ -58,6 +65,7 @@ const toggleDropDown = () => {
     isOpen.value = !isOpen.value
 }
 const closeKeyboard = (evt: KeyboardEvent) => {
+    console.log('adfasdf')
     if (evt.key === "Escape") {
         closeDropDown(evt)
     }
@@ -67,22 +75,71 @@ onBeforeUpdate(() => {
     if (isOpen.value) {
         window.addEventListener('click', closeDropDown)
         window.addEventListener("keydown", closeKeyboard)
-    } else {
+    }
+    else {
         window.removeEventListener('click', closeDropDown)
         window.removeEventListener("keydown", closeKeyboard)
     }
 })
+onUnmounted(() => {
+    window.removeEventListener('click', closeDropDown)
+    window.removeEventListener("keydown", closeKeyboard)
+})
+
 
 </script>
 <style lang="scss">
 .dropdown {
-    min-width: 219px;
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     font-size: 14px;
     position: relative;
     box-sizing: border-box;
+
+    &_width {
+        width: 219px;
+    }
+
+    &__list {
+        background: #FFF;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 40px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-radius: 4px;
+        z-index: 10;
+        box-shadow: 0px 0px 6px 0px rgba(148, 181, 225, 0.35);
+    }
+
+    &__item {
+        padding: 10px 8px 10px 16px;
+        cursor: pointer;
+
+        &_checked {
+            position: relative;
+            font-weight: 700;
+
+            &::before {
+                content: '';
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                background: url('../../assets/checked.svg') center no-repeat;
+                width: 16px;
+                height: 16px;
+                transform: translateY(-50%);
+            }
+        }
+
+        &:hover {
+            background-color: #EAF2FD;
+        }
+    }
 
     &__selected-options {
         border: 1px solid #DDD;
@@ -94,9 +151,15 @@ onBeforeUpdate(() => {
         font-weight: 400;
         position: relative;
 
+        &_error {
+            color: #EB5757;
+            border: 1px solid #EB5757;
+        }
+
         &_weight {
             font-weight: 700;
             text-transform: uppercase;
+
             &:hover {
                 font-weight: 400;
             }
@@ -141,55 +204,38 @@ onBeforeUpdate(() => {
         }
     }
 
-    &__list {
-        background: #FFF;
-        position: absolute;
-        min-width: 219px;
-        left: 0;
-        top: 40px;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        border-radius: 4px;
-        z-index: 10;
-        box-shadow: 0px 0px 6px 0px rgba(148, 181, 225, 0.35);
-    }
+    .dropdown__selected-options_weight {
+        max-width: 219px;
+        font-weight: 700;
+        text-transform: uppercase;
 
-    &__item {
-        padding: 10px 8px 10px 16px;
-        cursor: pointer;
-
-        &_checked {
-            position: relative;
-            font-weight: 700;
-            &::before {
-                content: '';
-                position: absolute;
-                right: 12px;
-                top: 50%;
-                background: url('../../assets/checked.svg') center no-repeat;
-                width: 16px;
-                height: 16px;
-                transform: translateY(-50%);
-            }
+        .dropdown__list {
+            max-width: 219px;
         }
 
         &:hover {
-            background-color: #EAF2FD;
+            font-weight: 400;
+        }
+
+        &-active {
+            border: 1px solid #2F80ED;
+            font-weight: 700;
+
+            &:hover {
+                font-weight: 700;
+            }
+
+            &::before {
+                transform: rotate(180deg) scaleX(-1) translateY(50%);
+            }
         }
     }
+
 }
 
 @media (min-width: 576px) {
-    .dropdown {
-        min-width: 235px;
+    .dropdown_width {
+        width: 235px;
 
-        &__list {
-            min-width: 235px;
-
-
-
-        }
     }
-}
-</style>
+}</style>

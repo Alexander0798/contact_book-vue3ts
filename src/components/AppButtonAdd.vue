@@ -5,33 +5,26 @@
     </button>
 </template>
   
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from "vue";
+const buttonText = ref('')
 
-export default defineComponent({
-    data() {
-        return {
-            buttonText: ''
-        }
-    },
-    methods: {
-        onResize() {
-            if (document.documentElement.clientWidth > 570) {
-                this.buttonText = 'добавить контакт'
-            } else {
-                this.buttonText = 'добавить'
-            }
-
-        }
-    },
-    created() {
-        window.addEventListener("resize", this.onResize);
-        this.onResize();
-    },
-    beforeDestroy() {
-        window.removeEventListener("resize", this.onResize);
+const onResize = () => {
+    if (document.documentElement.clientWidth > 570) {
+        buttonText.value = 'добавить контакт'
+    } else {
+        buttonText.value = 'добавить'
     }
-});
+
+}
+onMounted(() => {
+    window.addEventListener("resize", onResize);
+    onResize();
+})
+onBeforeUnmount(() => {
+    window.removeEventListener("resize", onResize);
+})
+
 </script>
 <style lang="scss">
 .button__add {
@@ -52,10 +45,11 @@ export default defineComponent({
     font-weight: 700;
     line-height: 16px;
     margin-left: auto;
+
     &:focus {
         outline: none;
     }
- 
+
 }
 </style>
   

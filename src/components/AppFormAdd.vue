@@ -1,17 +1,34 @@
 <template>
-    <AppForm>
+    <AppForm name="form-add" @submit.prevent="onSubmit">
         <h2 class="form__title">Контакт</h2>
-        <AppInputWrapper>
-            <div class="form__description-input">Имя</div>
-            <AppInput placeholder="Например «Андрей»..." />
-            <div class="form__description-input">Телефон</div>
-            <AppInput placeholder="+7(___)-___-__-__" />
-            <div class="form__description-input">E-mail</div>
-            <AppInput placeholder="Например «pochta@domain.ru»..." />
-            <div class="form__description-input">Категория</div>
-            <AppDropDown :options="props.optionsForm" :selectedOption="props.selectedForm" v-model="formValue.dropDownValue" />
-        </AppInputWrapper>
-        {{ formValue.dropDownValue }}
+        <div class="form__wrapper">
+            <div class="form__input-wrapper">
+                <div class="form__description-input">Имя</div>
+                <AppLabel :showError="v$.name.$error" :errorMessage="'Слишком короткое имя'">
+                    <AppInput name="name" type="text" v-model="formValue.name" :class="{'input_error': v$.name.$error}" placeholder="Например «Андрей»..." />
+                </AppLabel>
+            </div>
+            <div class="form__input-wrapper">
+                <div class="form__description-input">Телефон</div>
+                <AppLabel :showError="v$.phone.$error" :errorMessage="'Поле не может быть пустым'">
+                    <AppInput name="phone" v-phone type="tel" v-model="formValue.phone" :class="{'input_error': v$.phone.$error}" placeholder="+7(___)-___-__-__" />
+                </AppLabel>
+            </div>
+            <div class="form__input-wrapper">
+                <div class="form__description-input">E-mail</div>   
+                <AppLabel :showError="v$.email.$error" :errorMessage="'Не корректный e-mail'">
+                    <AppInput name="email" type="tel" v-model="formValue.email" :class="{'input_error': v$.email.$error}"
+                        placeholder="Например «pochta@domain.ru»..." />
+                </AppLabel>
+            </div>
+            <div class="form__input-wrapper">
+                <div class="form__description-input">Категория</div>
+                <AppLabel :showError="v$.category.$error" :errorMessage="'Поле не может быть пустым'">
+                    <AppDropDown :options="props.optionsForm" :selectedOption="props.selectedForm" :error="v$.category.$error"
+                        v-model="formValue.category" />
+                </AppLabel>
+            </div>
+        </div>
         <div class="form__button-wrapper">
             <AppButtonSave :isLoader="false" />
         </div>
@@ -19,35 +36,75 @@
 </template>
 <script setup lang="ts">
 
-import { PropType, defineProps, ref } from 'vue';
+import { PropType, ref, computed } from 'vue';
+import useValidator from '@vuelidate/core'
+import { required, email, minLength } from '@vuelidate/validators'
+
 import OptionDropDown from '../types/OptionDropDown'
+import AppForm from './UI/AppForm.vue'
 import AppDropDown from './UI/AppDropDown.vue';
+import AppInput from './UI/AppInput.vue';
+import AppButtonSave from './UI/AppButtonSave.vue';
+import AppLabel from './UI/AppLabel.vue';
+
 const props = defineProps({
     optionsForm: {
         type: Array as PropType<OptionDropDown[]>,
         required: true
     },
     selectedForm: {
-        type: null as unknown as PropType<null | OptionDropDown>,
+        type: Object as PropType<OptionDropDown>,
         required: true
-    },  
+    },
 })
 
 const formValue = ref<any>({
-    dropDownValue: props.selectedForm
+    name: '',
+    phone: '',
+    email: '',
+    category: null
 })
 
+const rules = computed(() => {
+    return {
+        name: { required, minLength: minLength(3) },
+        phone: { required },
+        email: { required, email },
+        category: { required }
+    }
+})
+const v$ = useValidator(rules, formValue)
+const emit = defineEmits(['onSubmit'])
+const onSubmit = async () => {
+    const isFormValid = await v$.value.$validate()
+    console.log(isFormValid)
+    if (isFormValid) {
+        emit('onSubmit', formValue)
+    }
+}   
 </script>
 <style lang="scss">
 .form {
-    padding: 32px 20px 48px;
-
     &__title {
         margin: 0 0 24px;
     }
 
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px 0;
+    }
+
+    &__input-wrapper {
+        display: flex;
+        gap: 0 12px;
+        font-size: 12px;
+        align-items: center;
+    }
+
     &__description-input {
         font-weight: 700;
+        min-width: 72px;
     }
 
     &__button-wrapper {

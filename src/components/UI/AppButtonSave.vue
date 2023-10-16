@@ -1,23 +1,19 @@
 <template>
     <button class="button-save">
-        <img src="../../assets/save.svg" alt="save" class="button-save__image" v-if="!isLoader">
+        <img src="../../assets/save.svg" alt="save" class="button-save__image" v-if="!props.isLoader">
         <img src="../../assets/loader.svg" alt="loader" class="button-save__image button-save__image_loader" v-else>
         <span class="button-save__text">Сохранить</span>
     </button>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-    name: "AppButtonSave",
-    props: {
-        isLoader: {
-            type: Boolean,
-            required: true,
-            default: false
-        }
+<script setup lang="ts">
+const props = defineProps({
+    isLoader: {
+        type: Boolean,
+        required: true,
+        default: false
     }
-});
+})
+
 </script>
 <style lang="scss">
 .button-save {
@@ -34,7 +30,10 @@ export default defineComponent({
     font-size: 14px;
     font-weight: 700;
     line-height: 120%;
-
+    outline: none;
+    &:focus {
+        outline: none;
+    }
     &__image {
 
         &_loader {

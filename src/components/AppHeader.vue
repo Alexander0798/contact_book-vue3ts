@@ -4,10 +4,8 @@
         <h1 class="header__title">книга контактов</h1>
     </header>
 </template>
-<script lang="ts">
-export default {
-   
-}
+<script setup lang="ts">
+
 </script>
 <style lang="scss">
 .header {

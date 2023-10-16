@@ -2,19 +2,18 @@
   <AppHeader />
   <main class="main">
     <AppMenu>
-      <AppDropDown :options="dropdown.optionsFilter" :selectedOption="dropdown.selectedFilter" :textWeight="true"
+      <AppDropDown v-if="!show" :options="dropdown.optionsFilter" :selectedOption="dropdown.selectedFilter" :textWeight="true"
         v-model="selectedFilterValue" />
-      {{ selectedFilterValue }}
-      <AppButtonAdd />
+      <AppButtonAdd @click="isOpenPopupAdd" />
     </AppMenu>
-    <AppFormAdd :optionsForm="dropdown.optionsForm" :selectedForm="dropdown.selectedForm" />
-
   </main>
+  <AppPopup v-model:show="show">
+    <AppFormAdd :optionsForm="dropdown.optionsForm" :selectedForm="dropdown.selectedForm" @onSubmit="submitFormAdd" />
+  </AppPopup>
 </template>
 <script setup lang="ts">
 
 import AppButtonAdd from './components/AppButtonAdd.vue';
-import AppHeader from './components/AppHeader.vue';
 import AppFormAdd from './components/AppFormAdd.vue';
 import { ref } from 'vue'
 
@@ -22,6 +21,8 @@ import { ref } from 'vue'
 import AppMenu from './components/AppMenu.vue';
 import AppDropDown from './components/UI/AppDropDown.vue';
 import AppState from './types/AppState';
+import AppPopup from './components/UI/AppPopup.vue';
+import AppHeader from './components/AppHeader.vue';
 const optionsFilter = [{
   name: "Все",
   id: 'all'
@@ -44,8 +45,17 @@ const dropdown = ref<AppState>({
   selectedForm: selectedForm
 })
 const selectedFilterValue = ref(selectedFilter)
+const show = ref(false)
 
+const isOpenPopupAdd = (() => {
+  show.value = true
+})
 
+const emit = defineEmits(['submitFormAdd'])
+
+const submitFormAdd = (data: any) => {
+  console.log(data)
+}
 
 </script>
 

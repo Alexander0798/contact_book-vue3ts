@@ -1,22 +1,16 @@
 <template>
-  <input :value="modelValue" @input="updateInput(($event.target as HTMLInputElement).value)" type="{{type}}"
+  <input :value="props.modelValue" @input="updateInput(($event.target as HTMLInputElement).value)" type="{{type}}"
     class="input" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "AppInput",
-  props: {
-    modelValue: [String, Number],
-  },
-  methods: {
-    updateInput(value: String) {
-      this.$emit("update:modelValue", value);
-    },
-  },
+<script setup lang="ts">
+const props = defineProps({
+  modelValue: [String, Number],
 });
+const emit = defineEmits(["update:modelValue"])
+const updateInput = (value: String) => {
+  emit("update:modelValue", value);
+}
 </script>
 
 <style lang="scss">
@@ -30,14 +24,19 @@ export default defineComponent({
   font-size: 12px;
   line-height: 160%;
   min-width: 228px;
+  width: 100%;
   box-sizing: border-box;
-
+  position: relative;
+  &:focus {
+    border: 1px solid #2F80ED;
+  }
   &_error {
-    border: 1px solid rgb(218, 0, 0);
+    border: 1px solid #EB5757;
+
+
+    &::placeholder {
+      color: #EB5757
+    }
   }
 
-  &_valid {
-    border: 1px solid rgb(21, 179, 0);
-  }
-}
-</style>
+}</style>
