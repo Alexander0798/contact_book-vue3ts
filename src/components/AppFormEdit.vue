@@ -26,13 +26,14 @@
             <div class="form__input-wrapper">
                 <div class="form__description-input">Категория</div>
                 <AppLabel :showError="v$.category.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppDropDown :options="props.optionsForm" :selectedOption="props.selectedForm"
+                    <AppDropDown :options="props.optionsForm" :selectedOption="props.contactEditValue."
                         :error="v$.category.$error" v-model="formValue.category" />
                 </AppLabel>
             </div>
         </div>
         <div class="form__button-wrapper">
-            <AppButtonSave :isLoader="false" type="submit"/>
+            <AppButtonSave :isLoader="false" type="submit" />
+            <AppButtonDeleted type="button" />
         </div>
     </AppForm>
 </template>
@@ -49,20 +50,20 @@ import AppDropDown from './UI/AppDropDown.vue';
 import AppInput from './UI/AppInput.vue';
 import AppButtonSave from './UI/AppButtonSave.vue';
 import AppLabel from './UI/AppLabel.vue';
-import Contact from '../types/Contact';
+import AppButtonDeleted from './UI/AppButtonDeleted.vue';
 
 const props = defineProps({
     optionsForm: {
         type: Array as PropType<OptionDropDown[]>,
         required: true
     },
-    selectedForm: {
-        type: Object as PropType<OptionDropDown>,
+    contactEditValue: {
+        type: Object,
         required: true
-    },
+    }
 })
 
-const formValue = ref<Contact>({
+const formValue = ref<any>({
     name: '',
     phone: '',
     email: '',

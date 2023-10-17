@@ -1,30 +1,17 @@
 <template>
     <button class="button__add">
         <img src="../assets/plus.svg" alt="plus" class="button__img">
-        <span class="button__text">{{ buttonText }}</span>
+        <span class="button__text">{{ props.transformButton ? 'добавить' : 'добавить контакт' }}</span>
     </button>
 </template>
   
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
-const buttonText = ref('')
-
-const onResize = () => {
-    if (document.documentElement.clientWidth > 570) {
-        buttonText.value = 'добавить контакт'
-    } else {
-        buttonText.value = 'добавить'
+const props = defineProps({
+    transformButton: {
+        type: Boolean,
+        required: true
     }
-
-}
-onMounted(() => {
-    window.addEventListener("resize", onResize);
-    onResize();
 })
-onBeforeUnmount(() => {
-    window.removeEventListener("resize", onResize);
-})
-
 </script>
 <style lang="scss">
 .button__add {

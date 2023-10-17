@@ -1,6 +1,6 @@
 <template >
     <div class="dropdown" @click="toggleDropDown" ref="dropDown" :class="{ 'dropdown_width': props.textWeight }">
-        <div class="dropdown__selected-options" :class="{
+        <div class="dropdown__selected-options"  tabindex="0" :class="{
             'dropdown__selected-options_active': isOpen && !props.textWeight,
             'dropdown__selected-options_weight-active': isOpen && props.textWeight,
             'dropdown__selected-options_weight': props.textWeight,
@@ -9,7 +9,7 @@
     selectedOption?.name : "Выбирете катигорию..." }}</div>
 
         <ul class="dropdown__list" v-if="isOpen">
-            <li class="dropdown__item" v-for="(   option, index   ) in    props.options   "
+            <li class="dropdown__item" tabindex="0" v-for="(   option, index   ) in    props.options   "
                 :class="{ 'dropdown__item_checked': selectedOption?.id === option.id }" :key="index"
                 @click="toggleSelected(option)">
                 {{ option.name }}
@@ -55,7 +55,6 @@ const toggleSelected = (option: OptionDropDown) => {
 
 const closeDropDown = (evt: Event) => {
     const el = evt.target as HTMLInputElement
-    console.log(el)
     if (!dropDown.value.contains(el)) {
         isOpen.value = false
     }
@@ -73,16 +72,16 @@ const closeKeyboard = (evt: KeyboardEvent) => {
 
 onBeforeUpdate(() => {
     if (isOpen.value) {
-        window.addEventListener('click', closeDropDown)
+        window.addEventListener('mousedown', closeDropDown)
         window.addEventListener("keydown", closeKeyboard)
     }
     else {
-        window.removeEventListener('click', closeDropDown)
+        window.removeEventListener('mousedown', closeDropDown)
         window.removeEventListener("keydown", closeKeyboard)
     }
 })
 onUnmounted(() => {
-    window.removeEventListener('click', closeDropDown)
+    window.removeEventListener('mousedown', closeDropDown)
     window.removeEventListener("keydown", closeKeyboard)
 })
 
@@ -97,7 +96,6 @@ onUnmounted(() => {
     font-size: 14px;
     position: relative;
     box-sizing: border-box;
-
     &_width {
         width: 219px;
     }
@@ -135,7 +133,10 @@ onUnmounted(() => {
                 transform: translateY(-50%);
             }
         }
-
+        &:focus {
+            outline: none;
+            background-color: #EAF2FD;
+        }
         &:hover {
             background-color: #EAF2FD;
         }
@@ -194,7 +195,10 @@ onUnmounted(() => {
             transform: translateY(-50%);
 
         }
-
+        &:focus {
+            outline: none;
+            border: 1px solid #2F80ED;
+        }
         &_active {
             border: 1px solid #2F80ED;
 

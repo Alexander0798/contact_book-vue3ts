@@ -15,10 +15,24 @@
         padding: 8px 12px;
         max-width: 990px;
         margin: 0 auto;
-        box-sizing: border-box;
     }
 
     background: #F9FCFF;
     border: 1px solid #EAF2FD;
+}
+
+@media (min-width: 768px) {
+    .menu {
+        &__wrapper {
+            padding: 8px 32px;
+        }
+    }
+}
+@media (min-width: 1200px) {
+    .menu {
+        &__wrapper {
+            padding: 8px 0;
+        }
+    }
 }
 </style>
