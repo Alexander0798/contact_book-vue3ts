@@ -2,7 +2,7 @@
   <div class="popup" ref="popup" v-if="props.show" @click.stop="hidePopup">
     <div @click.stop class="popup__wrapper">
       <div class="popup__description">
-        <img src="../../assets/contact_add.svg" alt="contact-add" class="popup__icon">
+        <img src="@/assets/contact_add.svg" alt="contact-add" class="popup__icon">
         <div class="popup__text">Добавить контакт</div>
       </div>
       <button @click.stop="hidePopup" class="popup__button-close"></button>
@@ -14,16 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, onUpdated, ref } from "vue";
+import {onUpdated, ref } from "vue";
 
 const props = defineProps({
   show: {
     type: Boolean,
     default: false,
-  },
-  save: {
-    type: Boolean,
-    default: false,
+    required: true
   },
 })
 const popup = ref(null)
@@ -39,11 +36,11 @@ const hidePopupEsc = (evt: KeyboardEvent) => {
 }
 
 onUpdated(() => {
-  if (popup.value)
+  if (popup.value) {
     window.addEventListener("keydown", hidePopupEsc);
-})
-onUnmounted(() => {
-  window.removeEventListener("keydown", hidePopupEsc);
+    window.removeEventListener("keydown", hidePopupEsc);
+  }
+
 })
 
 </script>
@@ -80,7 +77,7 @@ onUnmounted(() => {
     top: 50%;
     right: 17px;
     transform: translateY(-50%);
-    background: url('../../assets/back.svg') center no-repeat;
+    background: url('@/assets/back.svg') center no-repeat;
     width: 24px;
     height: 24px;
     padding: 0;

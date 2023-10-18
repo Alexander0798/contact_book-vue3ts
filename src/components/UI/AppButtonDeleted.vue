@@ -1,6 +1,6 @@
 <template>
   <button class="button-deleted">
-    <img src="../../assets/deleted.svg" alt="deleted" class="button-deleted__image">
+    <img src="@/assets/deleted.svg" alt="deleted" class="button-deleted__image">
     <span class="button-deleted__text">Удалить контакт</span>
   </button>
 </template>

@@ -10,7 +10,9 @@ export default interface State {
     dropDown: DropDown,
     contacts: Contact[],
     selectedFilter: OptionDropDown,
-    loading: boolean
+    loading: boolean,
+    isLoaderSave: boolean,
+    isLoaderEdit: boolean,
     showPopupAdd: boolean,
     showPopupEdit: boolean,
     editContactId: string | undefined

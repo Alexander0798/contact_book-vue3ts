@@ -5,74 +5,72 @@
             <div class="form__input-wrapper">
                 <div class="form__description-input">Имя</div>
                 <AppLabel :showError="v$.name.$error" :errorMessage="'Слишком короткое имя'">
-                    <AppInput name="name" type="text" v-model="formValue.name" :class="{ 'input_error': v$.name.$error }"
+                    <AppInput name="name" type="text" v-model="formValue.name" :value="formValue.name" :class="{ 'input_error': v$.name.$error }"
                         placeholder="Например «Андрей»..." />
                 </AppLabel>
             </div>
             <div class="form__input-wrapper">
                 <div class="form__description-input">Телефон</div>
                 <AppLabel :showError="v$.phone.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppInput name="phone" v-mask="'+7(###)###-##-##'" type="tel" v-model="formValue.phone"
+                    <AppInput name="phone" v-mask="'+7(###)###-##-##'" type="tel" v-model="formValue.phone" :value="formValue.phone"
                         :class="{ 'input_error': v$.phone.$error }" placeholder="+7(___)-___-__-__" />
                 </AppLabel>
             </div>
             <div class="form__input-wrapper">
                 <div class="form__description-input">E-mail</div>
                 <AppLabel :showError="v$.email.$error" :errorMessage="'Не корректный e-mail'">
-                    <AppInput name="email" type="tel" v-model="formValue.email" :class="{ 'input_error': v$.email.$error }"
+                    <AppInput name="email" type="tel" v-model="formValue.email" :value="formValue.email" :class="{ 'input_error': v$.email.$error }"
                         placeholder="Например «pochta@domain.ru»..." />
                 </AppLabel>
             </div>
             <div class="form__input-wrapper">
                 <div class="form__description-input">Категория</div>
                 <AppLabel :showError="v$.category.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppDropDown :options="props.optionsForm" :selectedOption="props.contactEditValue."
+                    <AppDropDown :options="optionsForm" :selectedOption="formValue.category"
                         :error="v$.category.$error" v-model="formValue.category" />
                 </AppLabel>
             </div>
         </div>
         <div class="form__button-wrapper">
-            <AppButtonSave :isLoader="false" type="submit" />
+            <AppButtonSave :isLoader="isLoader" type="submit" />
             <AppButtonDeleted type="button" />
         </div>
     </AppForm>
 </template>
 <script setup lang="ts">
 
-import { PropType, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { required, email, minLength } from '@vuelidate/validators'
-import useValidator from '@vuelidate/core'
-import dayjs from 'dayjs'
+import { ActionTypes } from '@/store/actions'
+import { useStore } from '@/store/store'
 
-import OptionDropDown from '../types/OptionDropDown'
-import AppForm from './UI/AppForm.vue'
-import AppDropDown from './UI/AppDropDown.vue';
-import AppInput from './UI/AppInput.vue';
-import AppButtonSave from './UI/AppButtonSave.vue';
-import AppLabel from './UI/AppLabel.vue';
+import useValidator from '@vuelidate/core'
+// import dayjs from 'dayjs'
+
+import OptionDropDown from '@/types/OptionDropDown'
+import AppForm from '@/components/UI/AppForm.vue'
+import AppDropDown from '@/components/UI/AppDropDown.vue';
+import AppInput from '@/components/UI/AppInput.vue';
+import AppButtonSave from '@/components/UI/AppButtonSave.vue';
+import AppLabel from '@/components/UI/AppLabel.vue';
+import Contact from '@/types/Contact';
 import AppButtonDeleted from './UI/AppButtonDeleted.vue';
 
-const props = defineProps({
-    optionsForm: {
-        type: Array as PropType<OptionDropDown[]>,
-        required: true
-    },
-    contactEditValue: {
-        type: Object,
-        required: true
-    }
+const store = useStore()
+
+const optionsForm = ref<OptionDropDown[]>(store.state.dropDown.optionsForm)
+const isLoader = computed(() => store.state.isLoaderEdit)
+
+const targetContact = store.getters.getContactById(store.state.editContactId)
+console.log(targetContact)
+const formValue = ref<Contact>({
+    name: targetContact.name,
+    phone: targetContact.phone,
+    email: targetContact.email,
+    category: targetContact.category,
+    id: targetContact.id,
+    date: targetContact.date
 })
-
-const formValue = ref<any>({
-    name: '',
-    phone: '',
-    email: '',
-    category: null,
-    id: String(dayjs().unix()),
-    date: dayjs().format('DD.MM.YY')
-})
-
-
 const rules = computed(() => {
     return {
         name: { required, minLength: minLength(3) },
@@ -86,7 +84,7 @@ const emit = defineEmits(['onSubmit'])
 const onSubmit = async () => {
     const isFormValid = await v$.value.$validate()
     if (isFormValid) {
-        emit('onSubmit', formValue)
+        store.dispatch(ActionTypes.EditContact, formValue.value)
     }
 }   
 </script>

@@ -1,6 +1,6 @@
 <template >
     <header class="header">
-        <img src="../assets/logo.svg" alt="logo" class="header__logo">
+        <img src="@/assets/logo.svg" alt="logo" class="header__logo">
         <h1 class="header__title">книга контактов</h1>
     </header>
 </template>

@@ -26,42 +26,38 @@
             <div class="form__input-wrapper">
                 <div class="form__description-input">Категория</div>
                 <AppLabel :showError="v$.category.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppDropDown :options="props.optionsForm" :selectedOption="props.selectedForm"
+                    <AppDropDown :options="optionsForm" :selectedOption="selectedForm"
                         :error="v$.category.$error" v-model="formValue.category" />
                 </AppLabel>
             </div>
         </div>
         <div class="form__button-wrapper">
-            <AppButtonSave :isLoader="false" type="submit"/>
+            <AppButtonSave :isLoader="isLoader" type="submit"/>
         </div>
     </AppForm>
 </template>
 <script setup lang="ts">
 
-import { PropType, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { required, email, minLength } from '@vuelidate/validators'
+import { ActionTypes } from '@/store/actions'
+import { useStore } from '@/store/store'
+
 import useValidator from '@vuelidate/core'
 import dayjs from 'dayjs'
 
-import OptionDropDown from '../types/OptionDropDown'
-import AppForm from './UI/AppForm.vue'
-import AppDropDown from './UI/AppDropDown.vue';
-import AppInput from './UI/AppInput.vue';
-import AppButtonSave from './UI/AppButtonSave.vue';
-import AppLabel from './UI/AppLabel.vue';
-import Contact from '../types/Contact';
+import OptionDropDown from '@/types/OptionDropDown'
+import AppForm from '@/components/UI/AppForm.vue'
+import AppDropDown from '@/components/UI/AppDropDown.vue';
+import AppInput from '@/components/UI/AppInput.vue';
+import AppButtonSave from '@/components/UI/AppButtonSave.vue';
+import AppLabel from '@/components/UI/AppLabel.vue';
+import Contact from '@/types/Contact';
 
-const props = defineProps({
-    optionsForm: {
-        type: Array as PropType<OptionDropDown[]>,
-        required: true
-    },
-    selectedForm: {
-        type: Object as PropType<OptionDropDown>,
-        required: true
-    },
-})
-
+const store = useStore()
+const isLoader = computed(() => store.state.isLoaderSave) 
+const optionsForm = ref<OptionDropDown[]>(store.state.dropDown.optionsForm)
+const selectedForm = ref<OptionDropDown>(store.state.dropDown.defaultSelectedForm)
 const formValue = ref<Contact>({
     name: '',
     phone: '',
@@ -70,8 +66,6 @@ const formValue = ref<Contact>({
     id: String(dayjs().unix()),
     date: dayjs().format('DD.MM.YY')
 })
-
-
 const rules = computed(() => {
     return {
         name: { required, minLength: minLength(3) },
@@ -85,7 +79,7 @@ const emit = defineEmits(['onSubmit'])
 const onSubmit = async () => {
     const isFormValid = await v$.value.$validate()
     if (isFormValid) {
-        emit('onSubmit', formValue)
+        store.dispatch(ActionTypes.CreateContact, formValue.value)
     }
 }   
 </script>

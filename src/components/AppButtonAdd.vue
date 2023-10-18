@@ -1,6 +1,6 @@
 <template>
     <button class="button__add">
-        <img src="../assets/plus.svg" alt="plus" class="button__img">
+        <img src="@/assets/plus.svg" alt="plus" class="button__img">
         <span class="button__text">{{ props.transformButton ? 'добавить' : 'добавить контакт' }}</span>
     </button>
 </template>

@@ -20,6 +20,8 @@ export const state: State = {
     contacts: [],
     selectedFilter: optionsFilter[0],
     loading: false,
+    isLoaderSave: false,
+    isLoaderEdit: false,
     showPopupAdd: false,
     showPopupEdit: false,
     editContactId: undefined

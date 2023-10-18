@@ -39,7 +39,7 @@ const props = defineProps({
       content: '';
       width: 16px;
       height: 16px;
-      background: url('../../assets/error-icon.svg') center no-repeat;
+      background: url('@/assets/error-icon.svg') center no-repeat;
       top: -100%;
       right: 8px;
       z-index: 11x;

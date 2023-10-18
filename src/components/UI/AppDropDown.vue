@@ -20,7 +20,7 @@
 <script setup lang="ts">
 
 import { PropType, ref, onBeforeUpdate, onUnmounted } from 'vue';
-import OptionDropDown from "../../types/OptionDropDown"
+import OptionDropDown from "@/types/OptionDropDown"
 
 
 const props = defineProps({
@@ -29,7 +29,7 @@ const props = defineProps({
         required: true
     },
     selectedOption: {
-        type: Object as PropType<OptionDropDown>,
+        type: null as unknown as PropType<OptionDropDown | null>,
         required: true
 
     },
@@ -127,7 +127,7 @@ onUnmounted(() => {
                 position: absolute;
                 right: 12px;
                 top: 50%;
-                background: url('../../assets/checked.svg') center no-repeat;
+                background: url('@/assets/checked.svg') center no-repeat;
                 width: 16px;
                 height: 16px;
                 transform: translateY(-50%);
@@ -188,7 +188,7 @@ onUnmounted(() => {
             position: absolute;
             right: 8px;
             top: 50%;
-            background: url('../../assets/arrow_icon.svg') center no-repeat;
+            background: url('@/assets/arrow_icon.svg') center no-repeat;
             width: 16px;
             height: 16px;
             transition: all linear 0.3s;
