@@ -42,6 +42,7 @@ const props = defineProps({
 }
 
 .item {
+    cursor: pointer;
     font-size: 12px;
     &__text {
         overflow: hidden;
@@ -91,11 +92,7 @@ const props = defineProps({
             flex: 0 0 24px;
         }
 
-        &__contact {}
-
-        &__connection {}
-
-        &__date {}
+  
 
     }
 }
@@ -124,10 +121,6 @@ const props = defineProps({
             gap: 0 8px;
             align-items: center;
         }
-
-        &__connection {}
-
-
     }
 }
 

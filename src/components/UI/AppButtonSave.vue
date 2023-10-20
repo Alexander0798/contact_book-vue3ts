@@ -34,6 +34,9 @@ const props = defineProps({
     &:focus {
         outline: none;
     }
+    &:hover {
+      background: #FFD84C;
+    }
     &__image {
 
         &_loader {

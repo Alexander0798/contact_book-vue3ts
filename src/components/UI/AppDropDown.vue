@@ -1,20 +1,21 @@
 <template >
     <div class="dropdown" @click="toggleDropDown" ref="dropDown" :class="{ 'dropdown_width': props.textWeight }">
-        <div class="dropdown__selected-options"  tabindex="0" :class="{
+        <div class="dropdown__selected-options" tabindex="0" :class="{
             'dropdown__selected-options_active': isOpen && !props.textWeight,
             'dropdown__selected-options_weight-active': isOpen && props.textWeight,
             'dropdown__selected-options_weight': props.textWeight,
             'dropdown__selected-options_error': props.error
         }">{{ !error ?
     selectedOption?.name : "Выбирете катигорию..." }}</div>
-
-        <ul class="dropdown__list" v-if="isOpen">
-            <li class="dropdown__item" tabindex="0" v-for="(   option, index   ) in    props.options   "
-                :class="{ 'dropdown__item_checked': selectedOption?.id === option.id }" :key="index"
-                @click="toggleSelected(option)">
-                {{ option.name }}
-            </li>
-        </ul>
+        <Transition name="translate-options-list">
+            <ul class="dropdown__list" v-if="isOpen">
+                <li class="dropdown__item" tabindex="0" v-for="(   option, index   ) in    props.options   "
+                    :class="{ 'dropdown__item_checked': selectedOption?.id === option.id }" :key="index"
+                    @click="toggleSelected(option)">
+                    {{ option.name }}
+                </li>
+            </ul>
+        </Transition>
     </div>
 </template>
 <script setup lang="ts">
@@ -96,6 +97,7 @@ onUnmounted(() => {
     font-size: 14px;
     position: relative;
     box-sizing: border-box;
+
     &_width {
         width: 219px;
     }
@@ -133,10 +135,12 @@ onUnmounted(() => {
                 transform: translateY(-50%);
             }
         }
+
         &:focus {
             outline: none;
             background-color: #EAF2FD;
         }
+
         &:hover {
             background-color: #EAF2FD;
         }
@@ -195,10 +199,12 @@ onUnmounted(() => {
             transform: translateY(-50%);
 
         }
+
         &:focus {
             outline: none;
             border: 1px solid #2F80ED;
         }
+
         &_active {
             border: 1px solid #2F80ED;
 
@@ -242,4 +248,16 @@ onUnmounted(() => {
         width: 235px;
 
     }
-}</style>
+}
+.translate-options-list-enter-active,
+.translate-options-list-leave-active {
+  transition: all .5s ease;
+}
+.translate-options-list-enter-from,
+.translate-options-list-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+
+ 
+}
+</style>

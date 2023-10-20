@@ -11,7 +11,13 @@ export enum MutationType {
     SetLoading = 'SET_LOADING',
     SetPopupAdd = 'SET_CREATE_POPUP',
     SetPopupEdit = 'SET_EDIT_POPUP',
-    SetSelectedFilter = 'SET_SELECTED_FILTER'
+    SetSelectedFilter = 'SET_SELECTED_FILTER',
+    SetLoadingSave = 'SET_LOADER_SAVE',
+    SetLoadingEdit = 'SET_LOADER_Edit',
+    SetNotifierSave = 'SET_NOTIFIER_SAVE',
+    SetNotifierEdit = 'SET_NOTIFIER_EDIT',
+    SetNotifierRemove = 'SET_NOTIFIER_REMOVE',
+    SetEditContactId = 'SET_EDIT_CONTACT_ID'
 }
 
 export type Mutations = {
@@ -19,7 +25,7 @@ export type Mutations = {
     [MutationType.SetContacts](state: State, contacts: Contact[]): void
     [MutationType.RemoveContact](
         state: State,
-        id: string 
+        id: string
     ): void
     [MutationType.EditContact](
         state: State,
@@ -27,17 +33,18 @@ export type Mutations = {
     ): void
     [MutationType.SetLoading](state: State, value: boolean): void
     [MutationType.SetPopupAdd](state: State, value: boolean): void
-    [MutationType.SetPopupEdit](state: State, value: { showPopup: boolean, contactId: string | undefined }): void
-    [MutationType.SetSelectedFilter](state: State, payload: OptionDropDown):void
+    [MutationType.SetPopupEdit](state: State, value: boolean): void
+    [MutationType.SetSelectedFilter](state: State, payload: OptionDropDown): void
+    [MutationType.SetEditContactId](state: State, contactId: string | undefined): void
+    [MutationType.SetLoadingSave](state: State, payload: boolean): void
+    [MutationType.SetLoadingEdit](state: State, payload: boolean): void
+    [MutationType.SetNotifierEdit](state: State, payload: boolean): void
+    [MutationType.SetNotifierRemove](state: State, payload: boolean): void
+    [MutationType.SetNotifierSave](state: State, payload: boolean): void
 }
 export const mutations: MutationTree<State> & Mutations = {
     [MutationType.CreateContact](state: State, contact: Contact) {
-        state.isLoaderSave = true
-        setTimeout(() => {
-            state.contacts.unshift(contact) 
-            state.isLoaderSave = false
-            state.showPopupAdd = false
-        }, 1000);
+        state.contacts.unshift(contact)
     },
     [MutationType.SetContacts](state: State, contacts: Contact[]) {
         state.contacts = contacts
@@ -47,19 +54,18 @@ export const mutations: MutationTree<State> & Mutations = {
         if (contactIndex === -1) return
         //If Task exist in the state, remove it
         state.contacts.splice(contactIndex, 1)
+
+        // setTimeout(() => {
+        //     state.notifiersRemove = true
+        //     setTimeout(() => {
+        //         state.notifiersRemove = false
+        //     }, 3000)
+        // }, 400)
     },
     [MutationType.EditContact](state: State, contact: Contact) {
         const contactIndex = state.contacts.findIndex(element => element.id === contact.id)
         if (contactIndex === -1) return
-        //If Task exist in the state, toggle the editing property
-        state.isLoaderEdit = true
-        setTimeout(() => {
-            state.contacts[contactIndex] = { ...contact }
-            console.log("contactEdit", state.contacts[contactIndex])
-            state.isLoaderEdit = false
-            state.showPopupEdit = false
-        }, 1000)
-
+    state.contacts[contactIndex] = { ...contact }
     },
     [MutationType.SetLoading](state: State, value: boolean) {
         state.loading = value
@@ -68,11 +74,31 @@ export const mutations: MutationTree<State> & Mutations = {
     [MutationType.SetPopupAdd](state: State, value: boolean) {
         state.showPopupAdd = value
     },
-    [MutationType.SetPopupEdit](state: State, value: { showPopup: boolean, contactId: string | undefined }) {
-        state.showPopupEdit = value.showPopup
-        state.editContactId = value.contactId
+    [MutationType.SetPopupEdit](state: State, value: boolean) {
+        state.showPopupEdit = value
+
     },
     [MutationType.SetSelectedFilter](state: State, payload: OptionDropDown) {
         state.selectedFilter = payload
-    }
+    },
+    [MutationType.SetEditContactId](state: State, payload: string | undefined) {
+        state.editContactId = payload
+    },
+    [MutationType.SetLoadingSave](state: State, payload: boolean) {
+        state.loadingSave = payload
+        console.log(state.loadingSave)
+    },
+    [MutationType.SetLoadingEdit](state: State, payload: boolean) {
+        state.loadingEdit = payload
+    },
+    [MutationType.SetNotifierEdit](state: State, payload: boolean) {
+        state.notifierEdit = payload
+    },
+    [MutationType.SetNotifierRemove](state: State, payload: boolean) {
+        state.notifierRemove = payload
+    },
+    [MutationType.SetNotifierSave](state: State, payload: boolean) {
+        state.notifierSave = payload
+    },
+
 }

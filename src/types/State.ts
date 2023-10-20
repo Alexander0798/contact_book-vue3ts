@@ -11,10 +11,12 @@ export default interface State {
     contacts: Contact[],
     selectedFilter: OptionDropDown,
     loading: boolean,
-    isLoaderSave: boolean,
-    isLoaderEdit: boolean,
+    loadingSave: boolean,
+    loadingEdit: boolean,
     showPopupAdd: boolean,
     showPopupEdit: boolean,
     editContactId: string | undefined
-
+    notifierSave: boolean,
+    notifierRemove: boolean,
+    notifierEdit: boolean
 }

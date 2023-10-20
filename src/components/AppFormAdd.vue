@@ -55,7 +55,7 @@ import AppLabel from '@/components/UI/AppLabel.vue';
 import Contact from '@/types/Contact';
 
 const store = useStore()
-const isLoader = computed(() => store.state.isLoaderSave) 
+const isLoader = computed(() => store.state.loadingSave) 
 const optionsForm = ref<OptionDropDown[]>(store.state.dropDown.optionsForm)
 const selectedForm = ref<OptionDropDown>(store.state.dropDown.defaultSelectedForm)
 const formValue = ref<Contact>({
@@ -77,6 +77,7 @@ const rules = computed(() => {
 const v$ = useValidator(rules, formValue)
 const emit = defineEmits(['onSubmit'])
 const onSubmit = async () => {
+    console.log(isLoader)
     const isFormValid = await v$.value.$validate()
     if (isFormValid) {
         store.dispatch(ActionTypes.CreateContact, formValue.value)

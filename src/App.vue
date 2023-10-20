@@ -11,12 +11,25 @@
         :id="`${contact.id}`" :contact="contact" @click="handleClickContact(String(contact.id))"></AppItem>
     </AppList>
   </main>
-  <AppPopup v-model:show="showPopupAdd">
-    <AppFormAdd />
-  </AppPopup>
-  <AppPopup v-model:show="showPopupEdit">
-    <AppFormEdit />
-  </AppPopup>
+  <Transition name="translate-popup">
+    <AppPopup v-model:show="showPopupAdd">
+      <AppFormAdd />
+    </AppPopup>
+  </Transition>
+  <Transition name="translate-popup">
+    <AppPopup v-model:show="showPopupEdit">
+      <AppFormEdit />
+    </AppPopup>
+  </Transition>
+  <Transition name="translate-notifiers">
+    <AppNotifiers v-if="notifiersRemove">Контакт удалён</AppNotifiers>
+  </Transition>
+  <Transition name="translate-notifiers">
+    <AppNotifiers v-if="notifiersSave">Контакт сохранён</AppNotifiers>
+  </Transition>
+  <Transition name="translate-notifiers">
+    <AppNotifiers v-if="notifiersEdit">Контакт изменён</AppNotifiers>
+  </Transition>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
@@ -35,13 +48,18 @@ import OptionDropDown from '@/types/OptionDropDown';
 
 import Contact from './types/Contact';
 import AppFormEdit from '@/components/AppFormEdit.vue';
+import AppNotifiers from './components/UI/AppNotifiers.vue';
 
 const store = useStore()
-console.log(store)
+
 const dropdown = ref<any>(store.state.dropDown)
 const transformButton = ref<boolean>(true)
 const transformContact = ref<boolean>(true)
 
+const contacts = computed((): Contact[] => store.state.contacts)
+const notifiersSave = computed((): boolean => store.state.notifierSave)
+const notifiersEdit = computed((): boolean => store.state.notifierEdit)
+const notifiersRemove = computed((): boolean => store.state.notifierRemove)
 const showPopupAdd = computed({
   get() {
     return store.state.showPopupAdd
@@ -66,7 +84,7 @@ const selectedFilter = computed({
     store.dispatch(ActionTypes.SetSelectedFilter, value)
   }
 })
-const contacts = computed((): Contact[] => store.state.contacts)
+
 
 const handleClickContact = (id: string) => {
   store.dispatch(ActionTypes.SetPopupEdit, { showPopup: true, contactId: id })
@@ -102,4 +120,28 @@ onBeforeUnmount(() => {
 </script>
 
 
-<style lang="scss"></style>
+<style lang="scss">
+.translate-popup-enter-active,
+.translate-popup-leave-active {
+  transition: all .5s ease;
+}
+
+.translate-popup-enter-from,
+.translate-popup-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+
+}
+.translate-notifiers-enter-active,
+.translate-notifiers-leave-active {
+  transition: all 1s ease;
+  transform: translateX(-50%);
+}
+
+.translate-notifiers-enter-from,
+.translate-notifiers-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+
+}
+</style>

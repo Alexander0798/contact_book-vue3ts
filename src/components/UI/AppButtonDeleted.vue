@@ -20,8 +20,8 @@ export default defineComponent({
   display: flex;
   align-items: center;
   font-size: 12px;
-  &__image {}
-
-  &__text {}
+  &:focus {
+    outline: none;
+  }
 }
 </style>

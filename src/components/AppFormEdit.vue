@@ -33,7 +33,7 @@
         </div>
         <div class="form__button-wrapper">
             <AppButtonSave :isLoader="isLoader" type="submit" />
-            <AppButtonDeleted type="button" />
+            <AppButtonDeleted type="button" @click="handleDelete()"/>
         </div>
     </AppForm>
 </template>
@@ -59,10 +59,10 @@ import AppButtonDeleted from './UI/AppButtonDeleted.vue';
 const store = useStore()
 
 const optionsForm = ref<OptionDropDown[]>(store.state.dropDown.optionsForm)
-const isLoader = computed(() => store.state.isLoaderEdit)
+const isLoader = computed(() => store.state.loadingEdit)
 
 const targetContact = store.getters.getContactById(store.state.editContactId)
-console.log(targetContact)
+
 const formValue = ref<Contact>({
     name: targetContact.name,
     phone: targetContact.phone,
@@ -86,7 +86,10 @@ const onSubmit = async () => {
     if (isFormValid) {
         store.dispatch(ActionTypes.EditContact, formValue.value)
     }
-}   
+}  
+const handleDelete = () => {
+    store.dispatch(ActionTypes.RemoveContact, formValue.value.id)
+} 
 </script>
 <style lang="scss">
 .form {
@@ -119,4 +122,5 @@ const onSubmit = async () => {
         gap: 0 24px
     }
 }
+
 </style>
