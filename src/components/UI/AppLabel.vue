@@ -32,14 +32,14 @@ const props = defineProps({
     right: 1px;
     font-size: 10px;
     line-height: 16px;
-    color: #EB5757;
+    color: $error;
 
     &::before {
       position: absolute;
       content: '';
       width: 16px;
       height: 16px;
-      background: url('@/assets/error-icon.svg') center no-repeat;
+      background: url('@/assets/icons/error-icon.svg') center no-repeat;
       top: -100%;
       right: 8px;
       z-index: 11x;

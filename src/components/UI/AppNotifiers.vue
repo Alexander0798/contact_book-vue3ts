@@ -1,6 +1,6 @@
 <template >
     <div class="notifiers">
-        <img src="@/assets/ok.svg" alt="ok" class="notifiers__img">
+        <img src="@/assets/icons/ok.svg" alt="ok" class="notifiers__img">
         <div class="notifiers__text">
             <slot></slot>
         </div>
@@ -12,13 +12,13 @@
 <style lang="scss">
 .notifiers {
     position: absolute;
+    z-index: 20;
     top: 64px;
     left: 50%;
-    transform: translateX(-50%) !important;
-    transform: translateY(0);
+    margin-left: -68.5px;
     min-width: 137px;
     border-radius: 40px;
-    background: #545454;
+    background: $darkGrey;
     box-shadow: 0px 0px 20px 0px rgba(176, 197, 222, 0.50);
     display: flex;
     gap: 0 2px;
@@ -42,16 +42,17 @@
 
 @media (min-width: 768px) {
     .notifiers {
+        margin: 0;
         border-radius: 4px;
-        background: #FFF;
+        background: $white;
         box-shadow: 0px 0px 16px 0px rgba(176, 197, 222, 0.50);
         min-width: 125px;
         top: auto;
         left: 32px;
         bottom: 48px;
-        transform: translateX(32px) !important;
+        
         &__text {
-            color: #545454;
+            color: $darkGrey;
         }
     }
 }
@@ -60,8 +61,7 @@
         min-width: 147px;
         min-height: 56px;
         &__text {
-            font-size: 14px;
-        
+            font-size: 14px; 
         }
     }
 }

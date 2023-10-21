@@ -1,6 +1,6 @@
 <template >
     <header class="header">
-        <img src="@/assets/logo.svg" alt="logo" class="header__logo">
+        <img src="@/assets/icons/logo.svg" alt="logo" class="header__logo">
         <h1 class="header__title">книга контактов</h1>
     </header>
 </template>
@@ -9,7 +9,7 @@
 </script>
 <style lang="scss">
 .header {
-    background: #282828;
+    background: $dark;
     min-height: 40px;
     display: flex;
     align-items: center;
@@ -25,7 +25,7 @@
         margin: 0;
         font-size: 14px;
         font-weight: 700;
-        color: #E0E0E0;
+        color: $yellow;
         text-transform: uppercase;
     }
 }

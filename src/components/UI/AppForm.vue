@@ -15,7 +15,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: $white;
   max-width: 704px;
   padding: 32px 20px 48px;
   box-sizing: border-box;

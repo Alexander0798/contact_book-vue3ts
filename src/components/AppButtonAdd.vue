@@ -1,6 +1,6 @@
 <template>
     <button class="button__add">
-        <img src="@/assets/plus.svg" alt="plus" class="button__img">
+        <img src="@/assets/icons/plus.svg" alt="plus" class="button__img">
         <span class="button__text">{{ props.transformButton ? 'добавить' : 'добавить контакт' }}</span>
     </button>
 </template>
@@ -25,8 +25,8 @@ const props = defineProps({
     gap: 0 4px;
     text-transform: uppercase;
     border-radius: 28px;
-    border: 1px solid #2F80ED;
-    color: #2F80ED;
+    border: 1px solid $blue;
+    color: $blue ;
     outline: none;
     font-size: 12px;
     font-weight: 700;

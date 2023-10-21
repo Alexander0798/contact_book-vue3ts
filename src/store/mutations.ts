@@ -13,7 +13,8 @@ export enum MutationType {
     SetPopupEdit = 'SET_EDIT_POPUP',
     SetSelectedFilter = 'SET_SELECTED_FILTER',
     SetLoadingSave = 'SET_LOADER_SAVE',
-    SetLoadingEdit = 'SET_LOADER_Edit',
+    SetLoadingEdit = 'SET_LOADER_EDIT',
+    SetLoadingRemove = 'SET_LOADER_REMOVE',
     SetNotifierSave = 'SET_NOTIFIER_SAVE',
     SetNotifierEdit = 'SET_NOTIFIER_EDIT',
     SetNotifierRemove = 'SET_NOTIFIER_REMOVE',
@@ -38,6 +39,7 @@ export type Mutations = {
     [MutationType.SetEditContactId](state: State, contactId: string | undefined): void
     [MutationType.SetLoadingSave](state: State, payload: boolean): void
     [MutationType.SetLoadingEdit](state: State, payload: boolean): void
+    [MutationType.SetLoadingRemove](state: State, payload: boolean): void
     [MutationType.SetNotifierEdit](state: State, payload: boolean): void
     [MutationType.SetNotifierRemove](state: State, payload: boolean): void
     [MutationType.SetNotifierSave](state: State, payload: boolean): void
@@ -47,20 +49,14 @@ export const mutations: MutationTree<State> & Mutations = {
         state.contacts.unshift(contact)
     },
     [MutationType.SetContacts](state: State, contacts: Contact[]) {
-        state.contacts = contacts
+        state.contacts = contacts.sort((a: Contact, b: Contact): any => {
+            return Number(a.date) - Number(b.date);
+          });
     },
     [MutationType.RemoveContact](state: State, id: string) {
         const contactIndex = state.contacts.findIndex(element => element.id === id)
         if (contactIndex === -1) return
-        //If Task exist in the state, remove it
         state.contacts.splice(contactIndex, 1)
-
-        // setTimeout(() => {
-        //     state.notifiersRemove = true
-        //     setTimeout(() => {
-        //         state.notifiersRemove = false
-        //     }, 3000)
-        // }, 400)
     },
     [MutationType.EditContact](state: State, contact: Contact) {
         const contactIndex = state.contacts.findIndex(element => element.id === contact.id)
@@ -90,6 +86,9 @@ export const mutations: MutationTree<State> & Mutations = {
     },
     [MutationType.SetLoadingEdit](state: State, payload: boolean) {
         state.loadingEdit = payload
+    },
+    [MutationType.SetLoadingRemove](state: State, payload: boolean){
+        state.loadingRemove = payload
     },
     [MutationType.SetNotifierEdit](state: State, payload: boolean) {
         state.notifierEdit = payload

@@ -26,20 +26,20 @@
             <div class="form__input-wrapper">
                 <div class="form__description-input">Категория</div>
                 <AppLabel :showError="v$.category.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppDropDown :options="optionsForm" :selectedOption="selectedForm"
-                        :error="v$.category.$error" v-model="formValue.category" />
+                    <AppDropDown :options="optionsForm" :selectedOption="selectedForm" :error="v$.category.$error"
+                        v-model="formValue.category" />
                 </AppLabel>
             </div>
         </div>
         <div class="form__button-wrapper">
-            <AppButtonSave :isLoader="isLoader" type="submit"/>
+            <AppButtonSave :isLoader="isLoader" type="submit" />
         </div>
     </AppForm>
 </template>
 <script setup lang="ts">
 
 import { ref, computed } from 'vue';
-import { required, email, minLength } from '@vuelidate/validators'
+import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { ActionTypes } from '@/store/actions'
 import { useStore } from '@/store/store'
 
@@ -55,7 +55,7 @@ import AppLabel from '@/components/UI/AppLabel.vue';
 import Contact from '@/types/Contact';
 
 const store = useStore()
-const isLoader = computed(() => store.state.loadingSave) 
+const isLoader = computed(() => store.state.loadingSave)
 const optionsForm = ref<OptionDropDown[]>(store.state.dropDown.optionsForm)
 const selectedForm = ref<OptionDropDown>(store.state.dropDown.defaultSelectedForm)
 const formValue = ref<Contact>({
@@ -64,12 +64,17 @@ const formValue = ref<Contact>({
     email: '',
     category: null,
     id: String(dayjs().unix()),
-    date: dayjs().format('DD.MM.YY')
+    date: String(dayjs().unix())
 })
 const rules = computed(() => {
     return {
         name: { required, minLength: minLength(3) },
-        phone: { required },
+        phone: {
+            required,
+            requirement: helpers.withMessage(() => 'Телефон не корректен',
+                (value) => /(\+7|8)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g
+                    .test(String(value)))
+        },
         email: { required, email },
         category: { required }
     }
@@ -80,6 +85,7 @@ const onSubmit = async () => {
     console.log(isLoader)
     const isFormValid = await v$.value.$validate()
     if (isFormValid) {
+        console.log(formValue.value)
         store.dispatch(ActionTypes.CreateContact, formValue.value)
     }
 }   

@@ -22,6 +22,7 @@ export const state: State = {
     loading: false,
     loadingSave: false,
     loadingEdit: false,
+    loadingRemove: false,
     showPopupAdd: false,
     showPopupEdit: false,
     editContactId: undefined,

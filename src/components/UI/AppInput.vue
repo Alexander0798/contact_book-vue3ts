@@ -16,11 +16,11 @@ const updateInput = (value: String) => {
 <style lang="scss">
 .input {
   border-radius: 4px;
-  border: 1px solid #DDD;
-  background: #FFF;
+  border: 1px solid $grey;
+  background: $white;
   outline: none;
   padding: 8px;
-  color: #545454;
+  color: $darkGrey;
   font-size: 12px;
   line-height: 160%;
   min-width: 228px;
@@ -28,14 +28,14 @@ const updateInput = (value: String) => {
   box-sizing: border-box;
   position: relative;
   &:focus {
-    border: 1px solid #2F80ED;
+    border: 1px solid $blue;
   }
   &_error {
-    border: 1px solid #EB5757;
+    border: 1px solid $error;
 
 
     &::placeholder {
-      color: #EB5757
+      color: $error;
     }
   }
 

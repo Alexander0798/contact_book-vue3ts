@@ -17,8 +17,8 @@
         margin: 0 auto;
     }
 
-    background: #F9FCFF;
-    border: 1px solid #EAF2FD;
+    background: $lightBlue;
+    border: 1px solid $mediumBlue;
 }
 
 @media (min-width: 768px) {
@@ -28,6 +28,7 @@
         }
     }
 }
+
 @media (min-width: 1200px) {
     .menu {
         &__wrapper {

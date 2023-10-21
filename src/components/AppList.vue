@@ -36,7 +36,7 @@ const props = defineProps({
     margin: 0 auto;
 }
 .description {
-        color: #B5B5B5;
+        color: $darkGrey;
         font-size: 10px !important;
         font-weight: 400;
         line-height: 16px;

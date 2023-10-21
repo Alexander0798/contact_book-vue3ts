@@ -21,5 +21,8 @@ export default {
                 'Content-type': 'application/json; charset=UTF-8',
               },
         }).then(res => res)
+    },
+    async deleteContact(id: string) {
+        return axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
     }
 }

@@ -1,7 +1,7 @@
 <template>
-    <button class="button-save" :disabled="isLoader">
-        <img src="@/assets/save.svg" alt="save" class="button-save__image" v-if="!props.isLoader">
-        <img src="@/assets/loader.svg" alt="loader" class="button-save__image button-save__image_loader" v-else>
+    <button class="button-save" :disabled="isLoader || disabled">
+        <img src="@/assets/icons/save.svg" alt="save" class="button-save__image" v-if="!props.isLoader">
+        <img src="@/assets/icons/loader.svg" alt="loader" class="button-save__image button-save__image_loader" v-else>
         <span class="button-save__text">Сохранить</span>
     </button>
 </template>
@@ -11,7 +11,11 @@ const props = defineProps({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    disabled: {
+    type: Boolean,
+    default: false
+  }
 })
 
 </script>
@@ -23,8 +27,8 @@ const props = defineProps({
     display: flex;
     gap: 4px;
     border-radius: 4px;
-    background: #FFC700;
-    color: #545454;
+    background: $yellow;
+    color: $darkGrey;
     justify-content: center;
     align-items: center;
     font-size: 14px;
@@ -35,7 +39,7 @@ const props = defineProps({
         outline: none;
     }
     &:hover {
-      background: #FFD84C;
+      background: $yellow;
     }
     &__image {
 

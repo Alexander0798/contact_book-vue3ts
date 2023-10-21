@@ -1,34 +1,46 @@
 <template>
   <AppHeader />
-  <main class="main">
+  <AppLoader v-if="loading" />
+  <main class="main" v-else>
     <AppMenu>
       <AppDropDown :options="dropdown.optionsFilter" :selectedOption="dropdown.defaultSelectedFilter" :textWeight="true"
         v-model="selectedFilter" />
       <AppButtonAdd @click="isOpenPopupAdd" :transformButton="transformButton" />
     </AppMenu>
-    <AppList :transformContact="transformContact">
+    <h2 v-if="!contacts.length" class="main__subtitle">Добавте первый контакт</h2>
+    <AppList :transformContact="transformContact" v-else>
       <AppItem :transformContact="transformContact" v-for="contact in contacts" :key="String(contact.id)"
         :id="`${contact.id}`" :contact="contact" @click="handleClickContact(String(contact.id))"></AppItem>
     </AppList>
   </main>
   <Transition name="translate-popup">
     <AppPopup v-model:show="showPopupAdd">
-      <AppFormAdd />
+      <template v-slot:header>
+        <AppPopupDescription :imgUrl="'src/assets/contact_add.svg'" :text="'Добавить контакт'" />
+      </template>
+      <template v-slot:content>
+        <AppFormAdd />
+      </template>
     </AppPopup>
   </Transition>
   <Transition name="translate-popup">
     <AppPopup v-model:show="showPopupEdit">
-      <AppFormEdit />
+      <template v-slot:header>
+        <AppPopupDescription :iconText="editContact.name[0]" :text="editContact.name" />
+      </template>
+      <template v-slot:content>
+        <AppFormEdit />
+      </template>
     </AppPopup>
   </Transition>
   <Transition name="translate-notifiers">
-    <AppNotifiers v-if="notifiersRemove">Контакт удалён</AppNotifiers>
+    <AppNotifiers v-if=" notifiersRemove ">Контакт удалён</AppNotifiers>
   </Transition>
   <Transition name="translate-notifiers">
-    <AppNotifiers v-if="notifiersSave">Контакт сохранён</AppNotifiers>
+    <AppNotifiers v-if=" notifiersSave ">Контакт сохранён</AppNotifiers>
   </Transition>
   <Transition name="translate-notifiers">
-    <AppNotifiers v-if="notifiersEdit">Контакт изменён</AppNotifiers>
+    <AppNotifiers v-if=" notifiersEdit ">Контакт изменён</AppNotifiers>
   </Transition>
 </template>
 <script setup lang="ts">
@@ -46,19 +58,29 @@ import AppItem from '@/components/AppItem.vue'
 import OptionDropDown from '@/types/OptionDropDown';
 
 
-import Contact from './types/Contact';
+import Contact from '@/types/Contact';
 import AppFormEdit from '@/components/AppFormEdit.vue';
-import AppNotifiers from './components/UI/AppNotifiers.vue';
+import AppNotifiers from '@/components/UI/AppNotifiers.vue';
+import AppLoader from '@/components/UI/AppLoader.vue';
+import AppPopupDescription from '@/components/UI/AppPopupDescription.vue';
 
 const store = useStore()
+const editContact = computed({
+  get() {
+    return store.getters.getContactById(store.state.editContactId)
+  },
+  set() {
 
+  }
+})
 const dropdown = ref<any>(store.state.dropDown)
 const transformButton = ref<boolean>(true)
 const transformContact = ref<boolean>(true)
 
-const contacts = computed((): Contact[] => store.state.contacts)
+const contacts = computed((): Contact[] => store.getters.filter())
 const notifiersSave = computed((): boolean => store.state.notifierSave)
 const notifiersEdit = computed((): boolean => store.state.notifierEdit)
+const loading = computed((): boolean => store.state.loading)
 const notifiersRemove = computed((): boolean => store.state.notifierRemove)
 const showPopupAdd = computed({
   get() {
@@ -82,6 +104,7 @@ const selectedFilter = computed({
   },
   set(value: OptionDropDown) {
     store.dispatch(ActionTypes.SetSelectedFilter, value)
+
   }
 })
 
@@ -121,6 +144,12 @@ onBeforeUnmount(() => {
 
 
 <style lang="scss">
+.main {
+  &__subtitle {
+    text-align: center;
+  }
+}
+
 .translate-popup-enter-active,
 .translate-popup-leave-active {
   transition: all .5s ease;
@@ -132,10 +161,10 @@ onBeforeUnmount(() => {
   transform: translateY(-30px);
 
 }
+
 .translate-notifiers-enter-active,
 .translate-notifiers-leave-active {
   transition: all 1s ease;
-  transform: translateX(-50%);
 }
 
 .translate-notifiers-enter-from,

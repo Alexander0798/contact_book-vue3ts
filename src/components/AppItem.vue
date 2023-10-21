@@ -5,7 +5,7 @@
         }}</span></div>
         <div class="item__connection"><span class="item__text">{{ props.contact.phone }}</span><span class="item__text">{{
             props.contact.email }}</span></div>
-        <div class="item__date item__text">{{ props.contact.date }}</div>
+        <div class="item__date item__text">{{ dayjs(props.contact.date).format('DD.MM.YY') }}</div>
     </li>
     <li class="list__item item" v-else>
         <div class="item__text item__contact"><span class="item__icon">{{ props.contact.name[0] }}</span><span
@@ -13,10 +13,11 @@
                 }}</span></div>
         <div class="item__text item__phone">{{ props.contact.phone }}</div>
         <div class="item__text item__email">{{ props.contact.email }}</div>
-        <div class="item__text item__date">{{ props.contact.date }}</div>
+        <div class="item__text item__date">{{ dayjs(props.contact.date).format('DD.MM.YY') }}</div>
     </li>
 </template>
 <script setup lang="ts">
+import dayjs from 'dayjs';
 const props = defineProps({
     transformContact: {
         type: Boolean,
@@ -35,15 +36,16 @@ const props = defineProps({
         grid-template-columns: repeat(2, 143px) 56px;
         min-height: 56px;
         gap: 0 4px;
-        border-bottom: 1px solid #EAF2FD;
+        border-bottom: 1px solid $mediumBlue;
         align-items: center;
-
+        justify-content: space-between;
     }
 }
 
 .item {
     cursor: pointer;
     font-size: 12px;
+
     &__text {
         overflow: hidden;
         word-wrap: break-word;
@@ -87,12 +89,12 @@ const props = defineProps({
             width: 24px;
             height: 24px;
             border-radius: 50px;
-            background: #FFC700;
+            background: $yellow;
             text-transform: uppercase;
             flex: 0 0 24px;
         }
 
-  
+
 
     }
 }
@@ -112,7 +114,7 @@ const props = defineProps({
             width: 24px;
             height: 24px;
             border-radius: 50px;
-            background: #FFC700;
+            background: $yellow;
             text-transform: uppercase;
         }
 

@@ -13,6 +13,7 @@ export default interface State {
     loading: boolean,
     loadingSave: boolean,
     loadingEdit: boolean,
+    loadingRemove: boolean,
     showPopupAdd: boolean,
     showPopupEdit: boolean,
     editContactId: string | undefined

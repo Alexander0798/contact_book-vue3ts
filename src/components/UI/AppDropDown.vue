@@ -103,7 +103,7 @@ onUnmounted(() => {
     }
 
     &__list {
-        background: #FFF;
+        background: $white;
         position: absolute;
         width: 100%;
         left: 0;
@@ -129,7 +129,7 @@ onUnmounted(() => {
                 position: absolute;
                 right: 12px;
                 top: 50%;
-                background: url('@/assets/checked.svg') center no-repeat;
+                background: url('@/assets/icons/checked.svg') center no-repeat;
                 width: 16px;
                 height: 16px;
                 transform: translateY(-50%);
@@ -138,27 +138,27 @@ onUnmounted(() => {
 
         &:focus {
             outline: none;
-            background-color: #EAF2FD;
+            background-color: $mediumBlue;
         }
 
         &:hover {
-            background-color: #EAF2FD;
+            background-color:  $mediumBlue;
         }
     }
 
     &__selected-options {
-        border: 1px solid #DDD;
+        border: 1px solid $grey;
         border-radius: 4px;
         padding: 6px 8px;
-        background: #FFF;
+        background: $white;
         transition: all linear 0.3s;
         cursor: pointer;
         font-weight: 400;
         position: relative;
 
         &_error {
-            color: #EB5757;
-            border: 1px solid #EB5757;
+            color: $error;
+            border: 1px solid $error;
         }
 
         &_weight {
@@ -170,7 +170,7 @@ onUnmounted(() => {
             }
 
             &-active {
-                border: 1px solid #2F80ED;
+                border: 1px solid $blue;
                 font-weight: 700;
 
                 &:hover {
@@ -184,7 +184,7 @@ onUnmounted(() => {
         }
 
         &:hover {
-            border: 1px solid #2F80ED;
+            border: 1px solid $blue;
         }
 
         &::before {
@@ -192,7 +192,7 @@ onUnmounted(() => {
             position: absolute;
             right: 8px;
             top: 50%;
-            background: url('@/assets/arrow_icon.svg') center no-repeat;
+            background: url('@/assets/icons/arrow_icon.svg') center no-repeat;
             width: 16px;
             height: 16px;
             transition: all linear 0.3s;
@@ -202,11 +202,11 @@ onUnmounted(() => {
 
         &:focus {
             outline: none;
-            border: 1px solid #2F80ED;
+            border: 1px solid $blue;
         }
 
         &_active {
-            border: 1px solid #2F80ED;
+            border: 1px solid $blue;
 
             &::before {
                 transform: rotate(180deg) scaleX(-1) translateY(50%);
@@ -228,7 +228,7 @@ onUnmounted(() => {
         }
 
         &-active {
-            border: 1px solid #2F80ED;
+            border: 1px solid $blue;
             font-weight: 700;
 
             &:hover {

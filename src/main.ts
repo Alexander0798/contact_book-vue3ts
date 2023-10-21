@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import { VueCookieNext } from "vue-cookie-next";
 import App from "./App.vue";
 import VueTheMask from 'vue-the-mask';
-import "./style.css";
+import "./style.scss";
 import { store, key } from './store/store'
 const VueMask: any = VueTheMask
 const app = createApp(App);

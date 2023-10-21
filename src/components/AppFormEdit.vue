@@ -5,42 +5,44 @@
             <div class="form__input-wrapper">
                 <div class="form__description-input">Имя</div>
                 <AppLabel :showError="v$.name.$error" :errorMessage="'Слишком короткое имя'">
-                    <AppInput name="name" type="text" v-model="formValue.name" :value="formValue.name" :class="{ 'input_error': v$.name.$error }"
-                        placeholder="Например «Андрей»..." />
+                    <AppInput name="name" type="text" v-model="formValue.name" :value="formValue.name"
+                        :class="{ 'input_error': v$.name.$error }" placeholder="Например «Андрей»..." />
                 </AppLabel>
             </div>
             <div class="form__input-wrapper">
                 <div class="form__description-input">Телефон</div>
                 <AppLabel :showError="v$.phone.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppInput name="phone" v-mask="'+7(###)###-##-##'" type="tel" v-model="formValue.phone" :value="formValue.phone"
-                        :class="{ 'input_error': v$.phone.$error }" placeholder="+7(___)-___-__-__" />
+                    <AppInput name="phone" v-mask="'+7(###)###-##-##'" type="tel" v-model="formValue.phone"
+                        :value="formValue.phone" :class="{ 'input_error': v$.phone.$error }"
+                        placeholder="+7(___)-___-__-__" />
                 </AppLabel>
             </div>
             <div class="form__input-wrapper">
                 <div class="form__description-input">E-mail</div>
                 <AppLabel :showError="v$.email.$error" :errorMessage="'Не корректный e-mail'">
-                    <AppInput name="email" type="tel" v-model="formValue.email" :value="formValue.email" :class="{ 'input_error': v$.email.$error }"
-                        placeholder="Например «pochta@domain.ru»..." />
+                    <AppInput name="email" type="tel" v-model="formValue.email" :value="formValue.email"
+                        :class="{ 'input_error': v$.email.$error }" placeholder="Например «pochta@domain.ru»..." />
                 </AppLabel>
             </div>
             <div class="form__input-wrapper">
                 <div class="form__description-input">Категория</div>
                 <AppLabel :showError="v$.category.$error" :errorMessage="'Поле не может быть пустым'">
-                    <AppDropDown :options="optionsForm" :selectedOption="formValue.category"
-                        :error="v$.category.$error" v-model="formValue.category" />
+                    <AppDropDown :options="optionsForm" :selectedOption="formValue.category" :error="v$.category.$error"
+                        v-model="formValue.category" />
                 </AppLabel>
             </div>
         </div>
         <div class="form__button-wrapper">
-            <AppButtonSave :isLoader="isLoader" type="submit" />
-            <AppButtonDeleted type="button" @click="handleDelete()"/>
+            <AppButtonSave :isLoader="isLoader" type="submit" :disabled="isLoader || changingForm()" />
+            <AppButtonDeleted :isLoader="isLoaderRemove" :disabled="isLoaderRemove || changingForm()" type="button"
+                @click="handleDelete()" />
         </div>
     </AppForm>
 </template>
 <script setup lang="ts">
 
 import { ref, computed } from 'vue';
-import { required, email, minLength } from '@vuelidate/validators'
+import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { ActionTypes } from '@/store/actions'
 import { useStore } from '@/store/store'
 
@@ -63,6 +65,8 @@ const isLoader = computed(() => store.state.loadingEdit)
 
 const targetContact = store.getters.getContactById(store.state.editContactId)
 
+const isLoaderRemove = computed(() => store.state.loadingRemove)
+
 const formValue = ref<Contact>({
     name: targetContact.name,
     phone: targetContact.phone,
@@ -71,22 +75,39 @@ const formValue = ref<Contact>({
     id: targetContact.id,
     date: targetContact.date
 })
+
 const rules = computed(() => {
     return {
         name: { required, minLength: minLength(3) },
-        phone: { required },
+        phone: {
+            required,
+            requirement: helpers.withMessage(() => 'Телефон не корректен',
+                (value) => /(\+7|8)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g
+                    .test(String(value)))
+        },
         email: { required, email },
         category: { required }
     }
 })
+const changingForm = () => {
+    const currentValue = JSON.stringify(formValue.value)
+    const createValue = JSON.stringify(targetContact)
+    if (currentValue === createValue) {
+        return true
+    } else {
+        return false
+    }
+}
+changingForm()
 const v$ = useValidator(rules, formValue)
 const emit = defineEmits(['onSubmit'])
 const onSubmit = async () => {
     const isFormValid = await v$.value.$validate()
-    if (isFormValid) {
+    changingForm()
+    if (isFormValid && !changingForm()) {
         store.dispatch(ActionTypes.EditContact, formValue.value)
     }
-}  
+}
 const handleDelete = () => {
     store.dispatch(ActionTypes.RemoveContact, formValue.value.id)
 } 
@@ -122,5 +143,4 @@ const handleDelete = () => {
         gap: 0 24px
     }
 }
-
 </style>
