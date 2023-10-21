@@ -76,7 +76,6 @@ const toggleDropDown = () => {
   isOpen.value = !isOpen.value;
 };
 const closeKeyboard = (evt: KeyboardEvent) => {
-  console.log("adfasdf");
   if (evt.key === "Escape") {
     closeDropDown(evt);
   }

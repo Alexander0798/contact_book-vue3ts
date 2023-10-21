@@ -20,7 +20,6 @@ const props = defineProps({
     type: String,
   },
 });
-console.log(props.imgUrl);
 </script>
 <style lang="scss">
 .popup {

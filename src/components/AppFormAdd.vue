@@ -119,10 +119,8 @@ const rules = computed(() => {
 const v$ = useValidator(rules, formValue);
 const emit = defineEmits(["onSubmit"]);
 const onSubmit = async () => {
-  console.log(isLoader);
   const isFormValid = await v$.value.$validate();
   if (isFormValid) {
-    console.log(formValue.value);
     store.dispatch(ActionTypes.CreateContact, formValue.value);
   }
 };
