@@ -1,5 +1,5 @@
 <template>
-  <button class="button-save" :disabled="isLoader || disabled">
+  <button class="button-save" :disabled="isLoader || disabled" :class="{'button-save_active': isLoader || disabled}">
     <img
       src="@/assets/icons/save.svg"
       alt="save"
@@ -44,8 +44,12 @@ const props = defineProps({
   font-weight: 700;
   line-height: 120%;
   outline: none;
+  &_active {
+    background: $darkYellow;
+  }
   &:focus {
     outline: none;
+    background: $darkYellow;
   }
   &:hover {
     background: $yellow;

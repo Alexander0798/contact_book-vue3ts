@@ -32,7 +32,6 @@
     <AppPopup v-model:show="showPopupAdd">
       <template v-slot:header>
         <AppPopupDescription
-          :imgUrl="'src/assets/icons/contact_add.svg'"
           :text="'Добавить контакт'"
         />
       </template>

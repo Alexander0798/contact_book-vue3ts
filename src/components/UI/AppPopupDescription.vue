@@ -1,12 +1,7 @@
 <template>
   <div class="popup__description">
-    <img
-      :src="props.imgUrl"
-      alt="icon"
-      class="popup__icon"
-      v-if="props.imgUrl"
-    />
-    <div class="popup__icon_text" v-if="props.iconText">
+    <div  alt="icon" class="popup__icon" v-if="!props.iconText"></div>
+    <div class="popup__icon_text" v-else>
       {{ props.iconText }}
     </div>
     <div class="popup__text">{{ props.text }}</div>
@@ -39,11 +34,17 @@ console.log(props.imgUrl);
   }
 
   &__icon {
+    background-image: url("@/assets/icons/contact_add.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+
     &_text {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 700;
       width: 20px;
       height: 20px;
@@ -55,23 +56,30 @@ console.log(props.imgUrl);
   }
 
   &__text {
+    font-size: 14px;
+    font-weight: 700;
   }
 }
 
 @media (min-width: 992px) {
   .popup {
-    &__description {
-    }
+    &__description {}
 
     &__icon {
+      width: 24px;
+      height: 24px;
+
+
       &_text {
         width: 24px;
         height: 24px;
         flex: 0 0 24px;
+        font-size: 12px;
       }
     }
 
     &__text {
+      font-size: 20px;
     }
   }
 }
