@@ -1,11 +1,12 @@
 <template>
   <label class="form__label" :class="{ form__label_padding: !props.showError }">
     <slot></slot>
-    <span class="form__error" v-if="props.showError">{{ props.errorMessage }}</span>
+    <span class="form__error" v-if="props.showError">{{
+      props.errorMessage
+    }}</span>
   </label>
 </template>
 <script setup lang="ts">
-
 const props = defineProps({
   errorMessage: {
     type: String,
@@ -15,9 +16,7 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-},)
-
-
+});
 </script>
 <style lang="scss">
 .form {
@@ -36,10 +35,10 @@ const props = defineProps({
 
     &::before {
       position: absolute;
-      content: '';
+      content: "";
       width: 16px;
       height: 16px;
-      background: url('@/assets/icons/error-icon.svg') center no-repeat;
+      background: url("@/assets/icons/error-icon.svg") center no-repeat;
       top: -100%;
       right: 8px;
       z-index: 11x;

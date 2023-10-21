@@ -1,16 +1,20 @@
 <template>
-  <input :value="props.modelValue" @input="updateInput(($event.target as HTMLInputElement).value)" type="{{type}}"
-    class="input" />
+  <input
+    :value="props.modelValue"
+    @input="updateInput(($event.target as HTMLInputElement).value)"
+    type="{{type}}"
+    class="input"
+  />
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
   modelValue: [String, Number],
 });
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits(["update:modelValue"]);
 const updateInput = (value: String) => {
   emit("update:modelValue", value);
-}
+};
 </script>
 
 <style lang="scss">
@@ -33,10 +37,9 @@ const updateInput = (value: String) => {
   &_error {
     border: 1px solid $error;
 
-
     &::placeholder {
       color: $error;
     }
   }
-
-}</style>
+}
+</style>

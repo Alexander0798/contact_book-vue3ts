@@ -1,4 +1,4 @@
 export default interface OptionSelect {
-    name: string,
-    id: string
+  name: string;
+  id: string;
 }

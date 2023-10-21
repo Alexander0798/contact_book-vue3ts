@@ -1,18 +1,33 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 + Vuex + TypeScript + Vite + Scss
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+- [Ссылка на Проект - Contact Book]()
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support For `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+Основные требования к приложению
+Нужно сверстать интерфейс для веб-приложения – это простая контактная книжка с разбивкой контактов на категории и возможностью добавить новые контакты с помощью формы.
+Список контактов
+Это основная страница приложения, на которой показаны все сохранённые контакты
+Над списком селектор с фильтром, фильтр содержит три параметра – «Все» / «Родственники» / «Коллеги»
+По умолчанию выбран параметр «Все»
+Фильтрация
+По «Всем»: отображаются все контакты, сортировка по дате добавления
+«Родственникам»: отображаются только контакты из категории «Родственники», сортировка по дате добавления
+«Коллегам»: отображаются только контакты из категории «Коллеги», сортировка по дате добавления
+По клику на кнопку «Добавить» открывается форма добавления контакта
+По клику на строку любого контакта открывается карточка контакта
+Карточка контакта
+Карточка контакта содержит Имя, Email, Телефон контакта, а также дату создания контакта и кнопку «Удалить»
+При нажатии на кнопку «Удалить», контакт удаляется из списка, пользователь возвращается в список контактов
+Форма добавления контакта и валидация полей
+Форма добавления пользователей содержит следующие поля
+«Имя» – текстовое поле, с ограничением по количеству символов без учёта пробелов – не менее 3-х. Ошибка при валидации «Слишком короткое имя»
+«E-mail» – текстовое поле, с валидацией на корректность адреса электронной почты. Ошибка при валидации «Некорректный e-mail»
+«Телефон» – числовое поле со стандартной маской российского номера телефона +7(**_)_**-**-** и с валидацией на корректность номера. Ошибка при валидации «Некорректный номер»
+«Категория» – селектор со списком категорий – «Коллеги» и «Родственники». По умолчанию селектор пустой. Ошибка при валидации «Поле не может быть пустым»
+Все поля формы обязательные (не могут быть пустыми). При валидации, если поле пустое, ошибка – «Поле не может быть пустым»
+Форма также содержит кнопку «Сохранить» – по клику на неё сначала происходит валидация полей, а затем запись данных, если поля валидны. Если поля не заполнены или заполнены некорректно, то поля отрабатывают соответствующие ошибки, а отправки и сохранения данных не происходит.
+Отправка данных
+После успешной валидации формы, данные из формы должны быть отправлены на фейковый API (с использованием setTimeout для имитации отправки данных).
+Пока данные «отправляются», отображается индикатор загрузки (лоадер).
+По завершении отправки, контакт с датой создания отображается в списке с фильтром «Все» и в списке с фильтром соответствующим роли (родственники или коллеги)
+Данные контактов хранить в любом сторе (Vuex или Pinia)

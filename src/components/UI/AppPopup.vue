@@ -17,29 +17,27 @@ const props = defineProps({
   show: {
     type: Boolean,
     default: false,
-    required: true
+    required: true,
   },
-})
-const popup = ref(null)
-const emit = defineEmits(["update:show"])
+});
+const popup = ref(null);
+const emit = defineEmits(["update:show"]);
 
 const hidePopup = () => {
   emit("update:show", false);
-}
+};
 const hidePopupEsc = (evt: KeyboardEvent) => {
   if (props.show && evt.key === "Escape") {
     hidePopup();
   }
-}
+};
 
 onUpdated(() => {
   if (popup.value) {
     window.addEventListener("keydown", hidePopupEsc);
     window.removeEventListener("keydown", hidePopupEsc);
   }
-
-})
-
+});
 </script>
 
 <style lang="scss">
@@ -60,13 +58,12 @@ onUpdated(() => {
     position: relative;
   }
 
-
   &__button-close {
     position: absolute;
     top: 50%;
     right: 17px;
     transform: translateY(-50%);
-    background: url('@/assets/icons/back.svg') center no-repeat;
+    background: url("@/assets/icons/back.svg") center no-repeat;
     width: 24px;
     height: 24px;
     padding: 0;

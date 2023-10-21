@@ -4,13 +4,10 @@
   </form>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 .form {
-
   margin: 0 auto;
   width: 100%;
   display: flex;
@@ -19,7 +16,7 @@
   max-width: 704px;
   padding: 32px 20px 48px;
   box-sizing: border-box;
-}           
+}
 @media (min-width: 576px) {
   .form {
     min-width: 552px;

@@ -1,7 +1,17 @@
 <template>
   <button class="button-deleted" :disabled="disabled || isLoader">
-    <img src="@/assets/icons/deleted.svg" alt="save" class="button-deleted__image" v-if="!props.isLoader">
-    <img src="@/assets/icons/loader.svg" alt="loader" class="button-deleted__image button-deleted__image_loader" v-else>
+    <img
+      src="@/assets/icons/deleted.svg"
+      alt="save"
+      class="button-deleted__image"
+      v-if="!props.isLoader"
+    />
+    <img
+      src="@/assets/icons/loader.svg"
+      alt="loader"
+      class="button-deleted__image button-deleted__image_loader"
+      v-else
+    />
 
     <span class="button-deleted__text">Удалить контакт</span>
   </button>
@@ -11,14 +21,13 @@ const props = defineProps({
   isLoader: {
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
   disabled: {
     type: Boolean,
-    default: false
-  }
-})
-
+    default: false,
+  },
+});
 </script>
 <style lang="scss">
 .button-deleted {
@@ -121,7 +130,7 @@ const props = defineProps({
     }
   }
 
-
-  &__text {}
+  &__text {
+  }
 }
 </style>

@@ -1,32 +1,36 @@
-import State from "../types/State"
-const  optionsFilter = [{
+import State from "../types/State";
+const optionsFilter = [
+  {
     name: "Все",
-    id: 'all'
-}, {
+    id: "all",
+  },
+  {
     name: "Родственники",
-    id: 'relatives'
-}, {
+    id: "relatives",
+  },
+  {
     name: "Коллеги",
-    id: 'colleagues'
-}]
+    id: "colleagues",
+  },
+];
 
 export const state: State = {
-    dropDown: {
-        optionsFilter: optionsFilter,
-        defaultSelectedFilter: optionsFilter[0],
-        optionsForm: optionsFilter.slice(1),
-        defaultSelectedForm: { name: 'Не выбрано', id: "not" },
-    },
-    contacts: [],
-    selectedFilter: optionsFilter[0],
-    loading: false,
-    loadingSave: false,
-    loadingEdit: false,
-    loadingRemove: false,
-    showPopupAdd: false,
-    showPopupEdit: false,
-    editContactId: undefined,
-    notifierSave: false,
-    notifierRemove: false,
-    notifierEdit: false
-}
+  dropDown: {
+    optionsFilter: optionsFilter,
+    defaultSelectedFilter: optionsFilter[0],
+    optionsForm: optionsFilter.slice(1),
+    defaultSelectedForm: { name: "Не выбрано", id: "not" },
+  },
+  contacts: [],
+  selectedFilter: optionsFilter[0],
+  loading: false,
+  loadingSave: false,
+  loadingEdit: false,
+  loadingRemove: false,
+  showPopupAdd: false,
+  showPopupEdit: false,
+  editContactId: undefined,
+  notifierSave: false,
+  notifierRemove: false,
+  notifierEdit: false,
+};

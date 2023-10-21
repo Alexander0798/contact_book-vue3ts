@@ -1,11 +1,10 @@
-
 body {
   margin: 0;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Proxima Nova", system-ui, sans-serif;
   font-weight: 400;
 
   font-synthesis: none;
@@ -15,7 +14,19 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-
+.max-width {
+  max-width: 990px;
+  margin: 0 auto;
+}
+button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+}
 #app {
-  width: 100%
+  width: 100%;
 }
