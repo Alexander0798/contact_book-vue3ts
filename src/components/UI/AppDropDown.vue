@@ -21,9 +21,12 @@
       <ul class="dropdown__list" v-if="isOpen">
         <li
           class="dropdown__item"
+          :class="{
+            dropdown__item_weight: props.textWeight,
+            dropdown__item_checked: Boolean(selectedOption?.id === option.id),
+          }"
           tabindex="0"
           v-for="(option, index) in props.options"
-          :class="{ dropdown__item_checked: selectedOption?.id === option.id }"
           :key="index"
           @click="toggleSelected(option)"
         >
@@ -126,6 +129,9 @@ onUnmounted(() => {
   &__item {
     padding: 10px 8px 10px 16px;
     cursor: pointer;
+    &_weight {
+      text-transform: uppercase;
+    }
 
     &_checked {
       position: relative;
@@ -169,9 +175,6 @@ onUnmounted(() => {
     }
 
     &_weight {
-      font-weight: 700;
-      text-transform: uppercase;
-
       &:hover {
         font-weight: 400;
       }
@@ -253,10 +256,12 @@ onUnmounted(() => {
     width: 235px;
   }
 }
+
 .translate-options-list-enter-active,
 .translate-options-list-leave-active {
   transition: all 0.5s ease;
 }
+
 .translate-options-list-enter-from,
 .translate-options-list-leave-to {
   opacity: 0;
