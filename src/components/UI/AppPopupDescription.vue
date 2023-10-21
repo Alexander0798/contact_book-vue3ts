@@ -1,6 +1,6 @@
 <template>
   <div class="popup__description">
-    <div  alt="icon" class="popup__icon" v-if="!props.iconText"></div>
+    <div alt="icon" class="popup__icon" v-if="!props.iconText"></div>
     <div class="popup__icon_text" v-else>
       {{ props.iconText }}
     </div>
@@ -62,12 +62,12 @@ const props = defineProps({
 
 @media (min-width: 992px) {
   .popup {
-    &__description {}
+    &__description {
+    }
 
     &__icon {
       width: 24px;
       height: 24px;
-
 
       &_text {
         width: 24px;

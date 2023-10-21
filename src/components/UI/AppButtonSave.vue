@@ -1,5 +1,9 @@
 <template>
-  <button class="button-save" :disabled="isLoader || disabled" :class="{'button-save_active': isLoader || disabled}">
+  <button
+    class="button-save"
+    :disabled="isLoader || disabled"
+    :class="{ 'button-save_active': isLoader || disabled }"
+  >
     <img
       src="@/assets/icons/save.svg"
       alt="save"

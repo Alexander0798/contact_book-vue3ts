@@ -15,7 +15,7 @@
       />
     </AppMenu>
     <h2 v-if="!contacts.length" class="main__subtitle max-width">
-      Добавте первый контакт
+      Нету сохранённых контактов
     </h2>
     <AppList :transformContact="transformContact" v-else>
       <AppItem
@@ -31,9 +31,7 @@
   <Transition name="translate-popup">
     <AppPopup v-model:show="showPopupAdd">
       <template v-slot:header>
-        <AppPopupDescription
-          :text="'Добавить контакт'"
-        />
+        <AppPopupDescription :text="'Добавить контакт'" />
       </template>
       <template v-slot:content>
         <AppFormAdd />
