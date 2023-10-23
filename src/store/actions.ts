@@ -71,7 +71,7 @@ export const actions: ActionTree<State, State> & Actions = {
   async [ActionTypes.EditContact]({ commit }: any, payload: Contact) {
     try {
       commit(MutationType.SetLoadingEdit, true);
-      const editContact = await api.patchContact;
+      const editContact = await api.patchContact(payload);
       console.log(editContact);
 
       commit(MutationType.EditContact, payload);

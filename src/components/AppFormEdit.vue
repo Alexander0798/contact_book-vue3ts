@@ -65,6 +65,12 @@
           />
         </AppLabel>
       </div>
+      <div class="form__input-wrapper">
+        <div class="form__description-input">Создан</div>
+        <span class="form__date">{{
+          dayjs(Number(formValue.date) * 1000).format("DD.MM.YY")
+        }}</span>
+      </div>
     </div>
     <div class="form__button-wrapper">
       <AppButtonSave
@@ -74,7 +80,7 @@
       />
       <AppButtonDeleted
         :isLoader="isLoaderRemove"
-        :disabled="isLoaderRemove || changingForm()"
+        :disabled="isLoaderRemove || isLoader"
         type="button"
         @click="handleDelete()"
       />
@@ -88,7 +94,6 @@ import { ActionTypes } from "@/store/actions";
 import { useStore } from "@/store/store";
 
 import useValidator from "@vuelidate/core";
-// import dayjs from 'dayjs'
 
 import OptionDropDown from "@/types/OptionDropDown";
 import AppForm from "@/components/UI/AppForm.vue";
@@ -98,6 +103,7 @@ import AppButtonSave from "@/components/UI/AppButtonSave.vue";
 import AppLabel from "@/components/UI/AppLabel.vue";
 import Contact from "@/types/Contact";
 import AppButtonDeleted from "./UI/AppButtonDeleted.vue";
+import dayjs from "dayjs";
 
 const store = useStore();
 
@@ -162,7 +168,9 @@ const handleDelete = () => {
   &__title {
     margin: 0 0 24px;
   }
-
+  &__date {
+    padding: 6px 9px;
+  }
   &__wrapper {
     display: flex;
     flex-direction: column;

@@ -1,20 +1,35 @@
 <template>
-  <div class="dropdown" @click="toggleDropDown" ref="dropDown" :class="{ 'dropdown_width': props.textWeight }">
-    <div class="dropdown__selected-options" tabindex="0" :class="{
-      'dropdown__selected-options_active': isOpen && !props.textWeight,
-      'dropdown__selected-options_weight-active': isOpen && props.textWeight,
-      'dropdown__selected-options_weight': props.textWeight,
-      'dropdown__selected-options_error': props.error,
-    }">
+  <div
+    class="dropdown"
+    @click="toggleDropDown"
+    ref="dropDown"
+    :class="{ dropdown_width: props.textWeight }"
+  >
+    <div
+      class="dropdown__selected-options"
+      tabindex="0"
+      :class="{
+        'dropdown__selected-options_active': isOpen && !props.textWeight,
+        'dropdown__selected-options_weight-active': isOpen && props.textWeight,
+        'dropdown__selected-options_weight': props.textWeight,
+        'dropdown__selected-options_error': props.error,
+      }"
+    >
       {{ !error ? selectedOption?.name : "Выбирете катигорию..." }}
     </div>
     <Transition name="translate-options-list">
       <ul class="dropdown__list" v-if="isOpen">
-        <li class="dropdown__item" :class="{
-          'dropdown__item_weight': props.textWeight,
-          'dropdown__item_checked': Boolean(selectedOption?.id === option.id)
-        }" tabindex="0"
-          v-for="(option, index) in props.options" :key="index" @click="toggleSelected(option)">
+        <li
+          class="dropdown__item"
+          :class="{
+            dropdown__item_weight: props.textWeight,
+            dropdown__item_checked: Boolean(selectedOption?.id === option.id),
+          }"
+          tabindex="0"
+          v-for="(option, index) in props.options"
+          :key="index"
+          @click="toggleSelected(option)"
+        >
           {{ option.name }}
         </li>
       </ul>
@@ -92,7 +107,6 @@ onUnmounted(() => {
   font-size: 14px;
   position: relative;
   box-sizing: border-box;
- 
 
   &_width {
     width: 219px;
@@ -166,7 +180,7 @@ onUnmounted(() => {
     &_weight {
       font-weight: 700;
       text-transform: uppercase;
-      transition: all linear .5s;
+      transition: all linear 0.5s;
 
       &:hover {
         font-weight: 400;

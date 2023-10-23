@@ -7,7 +7,7 @@
       v-if="!props.isLoader"
     />
     <img
-      src="@/assets/icons/loader.svg"
+      src="../../assets/icons/loader-blue.svg"
       alt="loader"
       class="button-deleted__image button-deleted__image_loader"
       v-else
@@ -38,7 +38,7 @@ const props = defineProps({
   display: flex;
   align-items: center;
   font-size: 12px;
-
+  gap: 0 2px;
   &:focus {
     outline: none;
   }

@@ -68,7 +68,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [MutationType.SetLoading](state: State, value: boolean) {
     state.loading = value;
-    console.log("I am loading...");
+    console.log(`I am loading...  ${value}`);
   },
   [MutationType.SetPopupAdd](state: State, value: boolean) {
     state.showPopupAdd = value;
@@ -84,7 +84,6 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [MutationType.SetLoadingSave](state: State, payload: boolean) {
     state.loadingSave = payload;
-    console.log(state.loadingSave);
   },
   [MutationType.SetLoadingEdit](state: State, payload: boolean) {
     state.loadingEdit = payload;

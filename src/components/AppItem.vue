@@ -9,7 +9,7 @@
       ><span class="item__text">{{ props.contact.email }}</span>
     </div>
     <div class="item__date item__text">
-      {{ dayjs(props.contact.date).format("DD.MM.YY") }}
+      {{ dayjs(Number(props.contact.date * 1000)).format("DD.MM.YY") }}
     </div>
   </li>
   <li class="list__item item" v-else>
@@ -20,7 +20,7 @@
     <div class="item__text item__phone">{{ props.contact.phone }}</div>
     <div class="item__text item__email">{{ props.contact.email }}</div>
     <div class="item__text item__date">
-      {{ dayjs(props.contact.date).format("DD.MM.YY") }}
+      {{ dayjs(Number(props.contact.date * 1000)).format("DD.MM.YY") }}
     </div>
   </li>
 </template>

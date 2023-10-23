@@ -1,6 +1,10 @@
 <template>
-  <input :value="props.modelValue" @input="updateInput(($event.target as HTMLInputElement).value)" type="{{type}}"
-    class="input" />
+  <input
+    :value="props.modelValue"
+    @input="updateInput(($event.target as HTMLInputElement).value)"
+    type="{{type}}"
+    class="input"
+  />
 </template>
 
 <script setup lang="ts">
@@ -39,8 +43,6 @@ const updateInput = (value: String) => {
     font-family: inherit;
   }
 
-
-
   &:focus {
     border: 1px solid $blue;
   }
@@ -50,7 +52,6 @@ const updateInput = (value: String) => {
 
     &::placeholder {
       color: $error;
-
     }
   }
 }
