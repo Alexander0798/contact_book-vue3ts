@@ -48,6 +48,7 @@ const props = defineProps({
   font-weight: 700;
   line-height: 120%;
   outline: none;
+  transition: all linear .5s;
   &_active {
     background: $darkYellow;
   }
@@ -56,7 +57,7 @@ const props = defineProps({
     background: $darkYellow;
   }
   &:hover {
-    background: $yellow;
+    background: $lightYellow;
   }
   &__image {
     &_loader {
