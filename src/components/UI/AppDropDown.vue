@@ -1,35 +1,20 @@
 <template>
-  <div
-    class="dropdown"
-    @click="toggleDropDown"
-    ref="dropDown"
-    :class="{ dropdown_width: props.textWeight }"
-  >
-    <div
-      class="dropdown__selected-options"
-      tabindex="0"
-      :class="{
-        'dropdown__selected-options_active': isOpen && !props.textWeight,
-        'dropdown__selected-options_weight-active': isOpen && props.textWeight,
-        'dropdown__selected-options_weight': props.textWeight,
-        'dropdown__selected-options_error': props.error,
-      }"
-    >
+  <div class="dropdown" @click="toggleDropDown" ref="dropDown" :class="{ 'dropdown_width': props.textWeight }">
+    <div class="dropdown__selected-options" tabindex="0" :class="{
+      'dropdown__selected-options_active': isOpen && !props.textWeight,
+      'dropdown__selected-options_weight-active': isOpen && props.textWeight,
+      'dropdown__selected-options_weight': props.textWeight,
+      'dropdown__selected-options_error': props.error,
+    }">
       {{ !error ? selectedOption?.name : "Выбирете катигорию..." }}
     </div>
     <Transition name="translate-options-list">
       <ul class="dropdown__list" v-if="isOpen">
-        <li
-          class="dropdown__item"
-          :class="{
-            dropdown__item_weight: props.textWeight,
-            dropdown__item_checked: Boolean(selectedOption?.id === option.id),
-          }"
-          tabindex="0"
-          v-for="(option, index) in props.options"
-          :key="index"
-          @click="toggleSelected(option)"
-        >
+        <li class="dropdown__item" :class="{
+          'dropdown__item_weight': props.textWeight,
+          'dropdown__item_checked': Boolean(selectedOption?.id === option.id)
+        }" tabindex="0"
+          v-for="(option, index) in props.options" :key="index" @click="toggleSelected(option)">
           {{ option.name }}
         </li>
       </ul>
@@ -107,6 +92,7 @@ onUnmounted(() => {
   font-size: 14px;
   position: relative;
   box-sizing: border-box;
+ 
 
   &_width {
     width: 219px;
@@ -117,7 +103,7 @@ onUnmounted(() => {
     position: absolute;
     width: 100%;
     left: 0;
-    top: 40px;
+    top: 50px;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -129,10 +115,10 @@ onUnmounted(() => {
   &__item {
     padding: 10px 8px 10px 16px;
     cursor: pointer;
+
     &_weight {
       text-transform: uppercase;
     }
-
     &_checked {
       position: relative;
       font-weight: 700;
@@ -160,23 +146,34 @@ onUnmounted(() => {
   }
 
   &__selected-options {
+    box-sizing: border-box;
     border: 1px solid $grey;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
     padding: 6px 8px;
     background: $white;
     transition: all linear 0.3s;
     cursor: pointer;
     font-weight: 400;
     position: relative;
-
+    min-height: 40px;
     &_error {
       color: $error;
       border: 1px solid $error;
     }
 
     &_weight {
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all linear .5s;
+
       &:hover {
         font-weight: 400;
+      }
+
+      &-list {
+        text-transform: uppercase;
       }
 
       &-active {
@@ -216,33 +213,6 @@ onUnmounted(() => {
 
     &_active {
       border: 1px solid $blue;
-
-      &::before {
-        transform: rotate(180deg) scaleX(-1) translateY(50%);
-      }
-    }
-  }
-
-  .dropdown__selected-options_weight {
-    max-width: 219px;
-    font-weight: 700;
-    text-transform: uppercase;
-
-    .dropdown__list {
-      max-width: 219px;
-    }
-
-    &:hover {
-      font-weight: 400;
-    }
-
-    &-active {
-      border: 1px solid $blue;
-      font-weight: 700;
-
-      &:hover {
-        font-weight: 700;
-      }
 
       &::before {
         transform: rotate(180deg) scaleX(-1) translateY(50%);
